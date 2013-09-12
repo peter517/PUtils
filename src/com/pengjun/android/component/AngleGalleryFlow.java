@@ -11,24 +11,24 @@ import android.view.animation.Transformation;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
-public class GalleryFlow extends Gallery {
+public class AngleGalleryFlow extends Gallery {
 	private Camera mCamera = new Camera();// 相机类
 	private int mMaxRotationAngle = 60;// 最大转动角度
 	private int mMaxZoom = -300;// //最大缩放值
 	private int mCoveflowCenter;// 半径值
 
-	public GalleryFlow(Context context) {
+	public AngleGalleryFlow(Context context) {
 		super(context);
 		// 支持转换 ,执行getChildStaticTransformation方法
 		this.setStaticTransformationsEnabled(true);
 	}
 
-	public GalleryFlow(Context context, AttributeSet attrs) {
+	public AngleGalleryFlow(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.setStaticTransformationsEnabled(true);
 	}
 
-	public GalleryFlow(Context context, AttributeSet attrs, int defStyle) {
+	public AngleGalleryFlow(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		this.setStaticTransformationsEnabled(true);
 	}
