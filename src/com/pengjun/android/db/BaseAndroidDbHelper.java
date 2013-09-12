@@ -1,4 +1,4 @@
-package com.pengjun.db;
+package com.pengjun.android.db;
 
 import java.sql.SQLException;
 

@@ -3,12 +3,15 @@ package com.pengjun.utils;
 import java.io.InputStream;
 import java.util.Properties;
 
+import com.pengjun.android.utils.MyDebug;
+import com.pengjun.android.utils.AdResourceUtils;
+
 public class PropertiesUtils {
 
 	private static Properties props = new Properties();
 	static {
 		try {
-			InputStream in = ResourceUtils.class.getResourceAsStream("/setting.properties");
+			InputStream in = AdResourceUtils.class.getResourceAsStream("/setting.properties");
 			props.load(in);
 		} catch (Exception e) {
 			e.printStackTrace();

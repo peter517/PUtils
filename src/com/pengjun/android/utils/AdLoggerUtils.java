@@ -1,11 +1,11 @@
-package com.pengjun.utils;
+package com.pengjun.android.utils;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import de.mindpipe.android.logging.log4j.LogConfigurator;
 
-public class AndroidLoggerUtils {
+public class AdLoggerUtils {
 
 	public static void initLogger(String logPath, boolean useLogCatAppender, boolean useFileAppender) {
 

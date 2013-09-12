@@ -1,4 +1,4 @@
-package com.pengjun.utils;
+package com.pengjun.android.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -21,7 +21,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-public class ImageUtils {
+public class AdImageUtils {
 
 	public static Bitmap drawable2Bitmap(Drawable drawable) {
 		Bitmap bitmap = Bitmap

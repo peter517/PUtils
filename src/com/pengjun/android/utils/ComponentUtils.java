@@ -1,4 +1,6 @@
-package com.pengjun.utils;
+package com.pengjun.android.utils;
+
+import com.pengjun.utils.TimeUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -1,10 +1,12 @@
-package com.pengjun.utils;
+package com.pengjun.android.utils;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.List;
+
+import com.pengjun.utils.StringUtils;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -14,7 +16,7 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
 
-public class ResourceUtils {
+public class AdResourceUtils {
 
 	public static final String IS_DEBUG = "debug";
 

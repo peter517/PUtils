@@ -8,6 +8,8 @@ import java.util.List;
 import org.wltea.analyzer.core.IKSegmenter;
 import org.wltea.analyzer.core.Lexeme;
 
+import com.pengjun.android.utils.AdResourceUtils;
+
 import android.content.Context;
 
 public class IKAnalyzerUtils<T> {
@@ -19,7 +21,7 @@ public class IKAnalyzerUtils<T> {
 	public static List<String> getSegmentationList(Context context, String sentence) {
 
 		// single app must lager than 32m
-		if (ResourceUtils.getSingleAppMemeryLimit(context) <= ResourceUtils.SINGLE_APP_MEMORY_LIMIT_32) {
+		if (AdResourceUtils.getSingleAppMemeryLimit(context) <= AdResourceUtils.SINGLE_APP_MEMORY_LIMIT_32) {
 			return new ArrayList<String>();
 		}
 

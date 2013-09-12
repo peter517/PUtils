@@ -20,7 +20,7 @@ public class BaseDao<T> {
 	public final static String DB_SEARCH_STRING_NOT_FOUND = null;
 	public final static int DB_SEARCH_INT_NOT_FOUND = -1;
 
-	public BaseDao(ConnectionSource cs, Class<T> modelClass) {
+	protected BaseDao(ConnectionSource cs, Class<T> modelClass) {
 		this.cs = cs;
 		try {
 			dao = DaoManager.createDao(cs, modelClass);
