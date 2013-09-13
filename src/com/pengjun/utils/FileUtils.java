@@ -13,10 +13,10 @@ import java.io.OptionalDataException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pengjun.android.utils.MyDebug;
-
 import android.content.Context;
 import android.os.Environment;
+
+import com.pengjun.android.utils.DebugUtils;
 
 public class FileUtils {
 
@@ -76,17 +76,18 @@ public class FileUtils {
 
 	public static void printCurAppDir(Context context) {
 		Context cont = context.getApplicationContext();
-		MyDebug.printFromPJ("cont.getCacheDir() = " + cont.getCacheDir());
-		MyDebug.printFromPJ("cont.getDatabasePath = " + cont.getDatabasePath("temp"));
-		MyDebug.printFromPJ("cont.getFilesDir() = " + cont.getFilesDir());
+		DebugUtils.printFromPJ("cont.getCacheDir() = " + cont.getCacheDir());
+		DebugUtils.printFromPJ("cont.getDatabasePath = " + cont.getDatabasePath("temp"));
+		DebugUtils.printFromPJ("cont.getFilesDir() = " + cont.getFilesDir());
 	}
 
-	public static <T> void writeListToFile(List<T> list, String filename) {
+	public static <T> boolean writeListToFile(List<T> list, String filename) {
 		ObjectOutputStream out = null;
 		try {
 			out = new ObjectOutputStream(new FileOutputStream(filename));
 			out.writeObject(list);
 			close(out);
+			return true;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -94,6 +95,8 @@ public class FileUtils {
 		} finally {
 			close(out);
 		}
+
+		return false;
 
 	}
 
@@ -115,7 +118,7 @@ public class FileUtils {
 		return list;
 	}
 
-	public static boolean createDir(String dir) {
+	public static boolean createDirIfNotExist(String dir) {
 		File file = new File(dir);
 		if (!file.exists() && file.mkdir() == false) {
 			return false;

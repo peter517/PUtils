@@ -1,17 +1,16 @@
 package com.pengjun.utils;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-import com.pengjun.android.utils.MyDebug;
-import com.pengjun.android.utils.AdResourceUtils;
-
 public class PropertiesUtils {
 
+	public final static String FILENAME = "setting.properties";
 	private static Properties props = new Properties();
 	static {
 		try {
-			InputStream in = AdResourceUtils.class.getResourceAsStream("/setting.properties");
+			InputStream in = new FileInputStream(FILENAME);
 			props.load(in);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -30,7 +29,6 @@ public class PropertiesUtils {
 
 	public static boolean getBoolean(String key, boolean defaultValue) {
 		String value = (String) props.get(key);
-		MyDebug.printFromPJ(value);
 		return value == null ? defaultValue : Boolean.valueOf(value);
 	}
 

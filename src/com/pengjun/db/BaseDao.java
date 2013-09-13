@@ -37,6 +37,15 @@ public class BaseDao<T> {
 		}
 	}
 
+	public T search(T object) {
+		try {
+			return (T) dao.queryForMatching(object);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public void update(T ar) {
 		try {
 			dao.update(ar);
