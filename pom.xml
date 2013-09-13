@@ -7,14 +7,6 @@
 	<name>PUtils</name>
 	<description>personal utils</description>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>src</directory>
-			</resource>
-		</resources>
-	</build>
-	
 	<dependencies>
 
 		<dependency>
