@@ -23,7 +23,9 @@ public class BaseNettyClient {
 	protected Channel channel = null;
 	protected ClientBootstrap bootstrap = null;
 
-	public SimpleChannelUpstreamHandler connect(ChannelPipelineFactory pipelineFactory, Class handlerClass) {
+	@SuppressWarnings("unchecked")
+	public SimpleChannelUpstreamHandler connect(ChannelPipelineFactory pipelineFactory,
+			@SuppressWarnings("rawtypes") Class handlerClass) {
 
 		bootstrap = new ClientBootstrap(new NioClientSocketChannelFactory(Executors.newCachedThreadPool(),
 				Executors.newCachedThreadPool()));
@@ -32,7 +34,6 @@ public class BaseNettyClient {
 		ChannelFuture connectFuture = bootstrap.connect(new InetSocketAddress(serverIp, port));
 		channel = connectFuture.awaitUninterruptibly().getChannel();
 		return channel.getPipeline().get(handlerClass);
-
 	}
 
 	public void disConnect() {

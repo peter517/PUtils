@@ -7,6 +7,21 @@
 	<name>PUtils</name>
 	<description>personal utils</description>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<target>1.6</target>
+					<source>1.6</source>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 
 		<dependency>
@@ -66,6 +81,21 @@
 			<version>3.2.9.Final</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.achartengine</groupId>
+			<artifactId>achartengine</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/achartengine-1.0.0.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.rg.wltea</groupId>
+			<artifactId>wltea</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/IKAnalyzer2012_u6.jar</systemPath>
+		</dependency>
 
 	</dependencies>
 </project>
