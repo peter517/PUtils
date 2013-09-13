@@ -7,7 +7,6 @@ import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 
 public class BaseNettyClient {
@@ -23,9 +22,7 @@ public class BaseNettyClient {
 	protected Channel channel = null;
 	protected ClientBootstrap bootstrap = null;
 
-	@SuppressWarnings("unchecked")
-	public SimpleChannelUpstreamHandler connect(ChannelPipelineFactory pipelineFactory,
-			@SuppressWarnings("rawtypes") Class handlerClass) {
+	public Channel connect(ChannelPipelineFactory pipelineFactory) {
 
 		bootstrap = new ClientBootstrap(new NioClientSocketChannelFactory(Executors.newCachedThreadPool(),
 				Executors.newCachedThreadPool()));
@@ -33,7 +30,7 @@ public class BaseNettyClient {
 
 		ChannelFuture connectFuture = bootstrap.connect(new InetSocketAddress(serverIp, port));
 		channel = connectFuture.awaitUninterruptibly().getChannel();
-		return channel.getPipeline().get(handlerClass);
+		return channel;
 	}
 
 	public void disConnect() {
