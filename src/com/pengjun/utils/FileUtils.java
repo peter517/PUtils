@@ -126,6 +126,11 @@ public class FileUtils {
 		return true;
 	}
 
+	public static void createDir(String dir) {
+		File file = new File(dir);
+		file.mkdir();
+	}
+
 	public static List<String> getFileNameList(File dir) {
 
 		File[] files = dir.listFiles();
