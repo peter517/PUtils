@@ -88,7 +88,7 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/achartengine-1.0.0.jar</systemPath>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.rg.wltea</groupId>
 			<artifactId>wltea</artifactId>
@@ -96,6 +96,33 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/IKAnalyzer2012_u6.jar</systemPath>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>stax</groupId>
+			<artifactId>stax-api</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+
+
+
 
 	</dependencies>
 </project>
