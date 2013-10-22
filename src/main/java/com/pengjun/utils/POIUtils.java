@@ -48,20 +48,17 @@ public class POIUtils {
 		return strList;
 	}
 
-	public static void writeWordDocx(String fileFullPath, List<String> strList) {
+	public static void writeWordDocx(String fileFullPath, List<String> strList)
+			throws FileNotFoundException {
 		writeWordDocx(fileFullPath, strList, false, -1);
 	}
 
 	public static void writeWordDocx(String fileFullPath, List<String> strList,
-			boolean indent, int indentUnit) {
+			boolean indent, int indentUnit) throws FileNotFoundException {
 
 		XWPFDocument document = new XWPFDocument();
 		FileOutputStream outStream = null;
-		try {
-			outStream = new FileOutputStream(fileFullPath);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+		outStream = new FileOutputStream(fileFullPath);
 
 		// XWPFTable table = document.createTable(2, 3);
 		// // 设置上下左右四个方向的距离，可以将表格撑大
