@@ -20,6 +20,26 @@ import com.pengjun.android.utils.DebugUtils;
 
 public class FileUtils {
 
+	public static String getExtensionName(String filename) {
+		if ((filename != null) && (filename.length() > 0)) {
+			int dot = filename.lastIndexOf('.');
+			if ((dot > -1) && (dot < (filename.length() - 1))) {
+				return filename.substring(dot + 1);
+			}
+		}
+		return filename;
+	}
+
+	public static String getFileNameNoEx(String filename) {
+		if ((filename != null) && (filename.length() > 0)) {
+			int dot = filename.lastIndexOf('.');
+			if ((dot > -1) && (dot < (filename.length()))) {
+				return filename.substring(0, dot);
+			}
+		}
+		return filename;
+	}
+
 	public static boolean isUrl(String path) {
 		if (path.startsWith("file://")) {
 			return false;
@@ -77,7 +97,8 @@ public class FileUtils {
 	public static void printCurAppDir(Context context) {
 		Context cont = context.getApplicationContext();
 		DebugUtils.printFromPJ("cont.getCacheDir() = " + cont.getCacheDir());
-		DebugUtils.printFromPJ("cont.getDatabasePath = " + cont.getDatabasePath("temp"));
+		DebugUtils.printFromPJ("cont.getDatabasePath = "
+				+ cont.getDatabasePath("temp"));
 		DebugUtils.printFromPJ("cont.getFilesDir() = " + cont.getFilesDir());
 	}
 
@@ -149,7 +170,8 @@ public class FileUtils {
 			return false;
 		}
 
-		File file = new File(Environment.getExternalStorageDirectory(), filename);
+		File file = new File(Environment.getExternalStorageDirectory(),
+				filename);
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream(file);

@@ -14,41 +14,26 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class POIUtils {
-	public static void main(String[] args) {
-		try {
 
-			List<String> strList = readWordDocx("d://test.docx");
-			for (String str : strList) {
-				System.out.println(str);
-			}
-
-			writeWordDocx("d://test1.docx", strList);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static List<String> readWordDocx(String sourceFileFullPath)
-			throws Exception {
+	public static List<String> readWordDocx(String sourceFileFullPath) {
 
 		ArrayList<String> strList = new ArrayList<String>();
 
 		File docFile = new File(sourceFileFullPath);
 		FileInputStream fis = null;
-		if (!docFile.exists()) {
-			throw new FileNotFoundException("The Word dcoument "
-					+ sourceFileFullPath + " does not exist.");
-		}
+		XWPFDocument doc = null;
+
 		try {
 			fis = new FileInputStream(docFile);
-			XWPFDocument doc = new XWPFDocument(fis);
+			doc = new XWPFDocument(fis);
 			List<XWPFParagraph> paragraphs = doc.getParagraphs();
 			Iterator<XWPFParagraph> it = paragraphs.iterator();
 			while (it.hasNext()) {
 				XWPFParagraph p = it.next();
 				strList.add(p.getText());
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			if (fis != null) {
 				try {
@@ -81,6 +66,7 @@ public class POIUtils {
 		// XWPFTable table = document.createTable(2, 3);
 		// // 设置上下左右四个方向的距离，可以将表格撑大
 		// table.setCellMargins(100, 100, 50, 250);
+		// table.setStyleID("Table Grid");
 		// // table.set
 		// List<XWPFTableCell> tableCells = table.getRow(0).getTableCells();
 		// tableCells.get(0).setText("( )1. A. room");
@@ -152,5 +138,20 @@ public class POIUtils {
 			return count;
 		}
 		return 0;
+	}
+
+	public static void main(String[] args) {
+		try {
+
+			List<String> strList = readWordDocx("d://test.docx");
+			for (String str : strList) {
+				System.out.println(str);
+			}
+
+			writeWordDocx("d://test1.docx", strList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

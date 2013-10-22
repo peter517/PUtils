@@ -8,9 +8,12 @@ public class SwingUtils {
 
 	public static void setFrameCenter(JFrame frame) {
 
-		int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-		int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-		frame.setLocation((screenWidth - frame.getWidth()) / 2, (screenHeight - frame.getHeight()) / 2);
+		int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize()
+				.getWidth();
+		int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize()
+				.getHeight();
+		frame.setLocation((screenWidth - frame.getWidth()) / 2,
+				(screenHeight - frame.getHeight()) / 2);
 
 	}
 
