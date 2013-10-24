@@ -1,4 +1,4 @@
-package com.pengjun.db;
+package com.pengjun.db.orm;
 
 import java.sql.SQLException;
 
