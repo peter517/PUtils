@@ -19,27 +19,12 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			
-			<!-- 
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<appendAssemblyId>false</appendAssemblyId>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>assembly</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			 -->
+
+			<!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> <configuration> 
+				<appendAssemblyId>false</appendAssemblyId> <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
+				</descriptorRefs> </configuration> <executions> <execution> <id>make-assembly</id> 
+				<phase>package</phase> <goals> <goal>assembly</goal> </goals> </execution> 
+				</executions> </plugin> -->
 		</plugins>
 	</build>
 
@@ -123,22 +108,18 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.9</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.poi</groupId>
-			<artifactId>ooxml.schemas</artifactId>
-			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/poi-ooxml-schemas-3.9-20121203.jar</systemPath>
+			<artifactId>ooxml-schemas</artifactId>
+			<version>1.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
-			<artifactId>scratchpad</artifactId>
-			<version>1.0.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/poi-scratchpad-3.9-20121203.jar</systemPath>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>3.9</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
