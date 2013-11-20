@@ -6,8 +6,6 @@ import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.List;
 
-import com.pengjun.utils.StringUtils;
-
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Color;
@@ -16,25 +14,31 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
 
+import com.pengjun.utils.StringUtils;
+
 public class AdResourceUtils {
 
 	public static final String IS_DEBUG = "debug";
 
 	public static final int SINGLE_APP_MEMORY_LIMIT_32 = 32;
 
-	public static int[] COLOR_ARR = new int[] { Color.BLUE, Color.MAGENTA, Color.DKGRAY, Color.CYAN,
-			Color.GREEN, Color.GRAY, Color.RED, Color.WHITE, Color.LTGRAY };
+	public static int[] COLOR_ARR = new int[] { Color.BLUE, Color.MAGENTA,
+			Color.DKGRAY, Color.CYAN, Color.GREEN, Color.GRAY, Color.RED,
+			Color.WHITE, Color.LTGRAY };
 	// res
 
 	// use SharedPreferences to check first install
 	public final static String SP_FIRST_START = "firstStart";
 
 	public static String getSharedPreferencesString(Context context, String key) {
-		return context.getSharedPreferences(SP_FIRST_START, 0).getString(key, StringUtils.NULL_STRING);
+		return context.getSharedPreferences(SP_FIRST_START, 0).getString(key,
+				StringUtils.NULL_STRING);
 	}
 
-	public static void putSharedPreferencesString(Context context, String key, String value) {
-		context.getSharedPreferences(SP_FIRST_START, 0).edit().putString(key, value).commit();
+	public static void putSharedPreferencesString(Context context, String key,
+			String value) {
+		context.getSharedPreferences(SP_FIRST_START, 0).edit()
+				.putString(key, value).commit();
 	}
 
 	public static boolean isServiceRunning(Context context, String className) {
@@ -42,7 +46,8 @@ public class AdResourceUtils {
 		boolean isRunning = false;
 		ActivityManager activityManager = (ActivityManager) context
 				.getSystemService(Context.ACTIVITY_SERVICE);
-		List<ActivityManager.RunningServiceInfo> serviceList = activityManager.getRunningServices(30);
+		List<ActivityManager.RunningServiceInfo> serviceList = activityManager
+				.getRunningServices(30);
 
 		if (!(serviceList.size() > 0)) {
 			return false;
@@ -81,7 +86,8 @@ public class AdResourceUtils {
 
 	public static boolean checkStorageSpace() {
 
-		StatFs stat = new StatFs(Environment.getDataDirectory().getAbsolutePath());
+		StatFs stat = new StatFs(Environment.getDataDirectory()
+				.getAbsolutePath());
 		long blockSize = stat.getBlockSize();
 		long availableBlocks = stat.getAvailableBlocks();
 
@@ -95,11 +101,11 @@ public class AdResourceUtils {
 	public static String getLocalIpAddress() {
 		String localIPs = "";
 		try {
-			for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en
-					.hasMoreElements();) {
+			for (Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces(); en.hasMoreElements();) {
 				NetworkInterface intf = en.nextElement();
-				for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr
-						.hasMoreElements();) {
+				for (Enumeration<InetAddress> enumIpAddr = intf
+						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
 					InetAddress inetAddress = enumIpAddr.nextElement();
 					if (!inetAddress.isLoopbackAddress()) {
 						localIPs = inetAddress.getHostAddress().toString();

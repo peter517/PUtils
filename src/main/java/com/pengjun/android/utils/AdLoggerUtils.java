@@ -7,17 +7,19 @@ import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class AdLoggerUtils {
 
-	public static void initLogger(String logPath, boolean useLogCatAppender, boolean useFileAppender) {
+	public static void initLogger(String logPath, boolean useLogCatAppender,
+			boolean useFileAppender) {
 
 		if (AdResourceUtils.hasExternalStorage()) {
 			LogConfigurator logConfigurator = new LogConfigurator();
 			logConfigurator.setFileName(logPath);
 			logConfigurator.setRootLevel(Level.DEBUG);
 			logConfigurator.setLevel("org.apache", Level.ERROR);
-			logConfigurator.setFilePattern("%d %-5p [%c{2}]-[%L] %m%n");
+			logConfigurator.setFilePattern("%d %-5p [%c{2}] %m [%F:%L] %n");
 			logConfigurator.setMaxFileSize(1024 * 1024 * 5);
 			logConfigurator.setImmediateFlush(true);
 
+			logConfigurator.setLogCatPattern("%m  [%F:%L:mmpc] %n");
 			logConfigurator.setUseLogCatAppender(useLogCatAppender);
 			logConfigurator.setUseFileAppender(useFileAppender);
 			logConfigurator.configure();
