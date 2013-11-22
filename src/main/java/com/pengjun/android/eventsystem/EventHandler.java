@@ -3,7 +3,7 @@ package com.pengjun.android.eventsystem;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.pengjun.android.component.HandlerThread;
+import com.pengjun.android.component.CreateLooperThread;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -21,7 +21,7 @@ public class EventHandler extends Handler {
 	public static EventHandler getInstance() {
 
 		if (messageHandler == null) {
-			HandlerThread thread = new HandlerThread();
+			CreateLooperThread thread = new CreateLooperThread();
 			thread.start();
 			try {
 				thread.waitForMyLooper();

@@ -12,6 +12,7 @@ public class AdLoggerUtils {
 
 		if (AdResourceUtils.hasExternalStorage()) {
 			LogConfigurator logConfigurator = new LogConfigurator();
+
 			logConfigurator.setFileName(logPath);
 			logConfigurator.setRootLevel(Level.DEBUG);
 			logConfigurator.setLevel("org.apache", Level.ERROR);
@@ -27,6 +28,23 @@ public class AdLoggerUtils {
 			logger.info("logger start");
 		}
 
+	}
+
+	public static void printException(Logger logger, Exception e) {
+		if (e == null || logger == null)
+			return;
+		StackTraceElement[] arrTrace = e.getStackTrace();
+		if (e.getCause() != null)
+			logger.error("cause:" + e.getCause());
+		if (e.getMessage() != null)
+			logger.error("cause:" + e.getMessage());
+		for (StackTraceElement trace : arrTrace) {
+			logger.error("\t" + trace);
+		}
+	}
+
+	public static Logger getCameraLogger(String tag) {
+		return Logger.getLogger(tag);
 	}
 
 }

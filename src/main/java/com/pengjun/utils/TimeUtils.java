@@ -17,7 +17,8 @@ public class TimeUtils {
 	public static final String TIME_SEPARATOR = "-";
 
 	private static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMT);
-	private static DateFormat yearMonthFormat = new SimpleDateFormat(YERA_MONTH_FORMT);
+	private static DateFormat yearMonthFormat = new SimpleDateFormat(
+			YERA_MONTH_FORMT);
 	private static DateFormat yearFormat = new SimpleDateFormat(YERA_FORMT);
 	private static DateFormat hourFormat = new SimpleDateFormat(HOUR_FORMT);
 
@@ -36,7 +37,8 @@ public class TimeUtils {
 	}
 
 	public static String stopTiming() {
-		return String.valueOf((System.currentTimeMillis() - time) / 1000f + "秒");
+		return String
+				.valueOf((System.currentTimeMillis() - time) / 1000f + "秒");
 	}
 
 	public static Date string2Date(String dateStr) {
@@ -123,7 +125,8 @@ public class TimeUtils {
 		int minute = calendar.get(Calendar.MINUTE);
 		int second = calendar.get(Calendar.SECOND);
 
-		String curTimeStr = String.format(TIME_STRING_FORMT, year, mouth + 1, day, hour, minute, second);
+		String curTimeStr = String.format(TIME_STRING_FORMT, year, mouth + 1,
+				day, hour, minute, second);
 
 		return curTimeStr;
 	}
@@ -140,7 +143,8 @@ public class TimeUtils {
 		int mouth = calendar.get(Calendar.MONTH);
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-		String curTimeStr = String.format(DATE_STRING_FORMT, year, mouth + 1, day);
+		String curTimeStr = String.format(DATE_STRING_FORMT, year, mouth + 1,
+				day);
 
 		return curTimeStr;
 	}
@@ -152,7 +156,8 @@ public class TimeUtils {
 
 	public static String getCurWeekYearStr() {
 		calendar.setTimeInMillis(System.currentTimeMillis());
-		return String.valueOf(calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.WEEK_OF_YEAR));
+		return String.valueOf(calendar.get(Calendar.YEAR) + " "
+				+ calendar.get(Calendar.WEEK_OF_YEAR));
 	}
 
 	public static String getCurMonthStr() {
@@ -166,8 +171,8 @@ public class TimeUtils {
 	}
 
 	public static String getRandomDateStr() {
-		return String.format(DATE_STRING_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
-				1 + random.nextInt(30));
+		return String.format(DATE_STRING_FORMT, 2000 + random.nextInt(13),
+				1 + random.nextInt(12), 1 + random.nextInt(30));
 	}
 
 	public static float getRandomFloat() {
@@ -180,8 +185,9 @@ public class TimeUtils {
 
 	public static String getRandomTimeStr() {
 
-		return String.format(TIME_STRING_FORMT, 2000 + random.nextInt(13), 1 + random.nextInt(12),
-				1 + random.nextInt(30), 1 + random.nextInt(24), 1 + random.nextInt(60),
+		return String.format(TIME_STRING_FORMT, 2000 + random.nextInt(13),
+				1 + random.nextInt(12), 1 + random.nextInt(30),
+				1 + random.nextInt(24), 1 + random.nextInt(60),
 				1 + random.nextInt(60));
 	}
 
@@ -203,6 +209,28 @@ public class TimeUtils {
 	public static String String2DayMonthStr(String dateStr) {
 		String[] date = String2DateStrArr(dateStr);
 		return date[1] + "-" + date[2];
+	}
+
+	public static String getTimeStrFromLongTime(long time) {
+
+		if (time >= 360000000) {
+			return "00:00:00";
+		}
+
+		String timeCount = "";
+		long hourc = time / 3600000;
+		String hour = "0" + hourc;
+		hour = hour.substring(hour.length() - 2, hour.length());
+
+		long minuec = (time - hourc * 3600000) / (60000);
+		String minue = "0" + minuec;
+		minue = minue.substring(minue.length() - 2, minue.length());
+
+		long secc = (time - hourc * 3600000 - minuec * 60000) / 1000;
+		String sec = "0" + secc;
+		sec = sec.substring(sec.length() - 2, sec.length());
+		timeCount = hour + ":" + minue + ":" + sec;
+		return timeCount;
 	}
 
 }

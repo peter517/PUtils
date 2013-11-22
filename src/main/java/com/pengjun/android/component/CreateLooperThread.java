@@ -2,7 +2,7 @@ package com.pengjun.android.component;
 
 import android.os.Looper;
 
-public class HandlerThread extends Thread {
+public class CreateLooperThread extends Thread {
 	private volatile Looper myLooper = null;
 
 	public Looper myLooper() {
