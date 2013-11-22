@@ -12,11 +12,13 @@ public class BaseDbHelper {
 	@SuppressWarnings("rawtypes")
 	private ConnectionSource cs;
 
+	@SuppressWarnings("unchecked")
 	protected BaseDbHelper(String dbUrl, Class[] dbClass) {
 		this.dbUrl = dbUrl;
 		try {
 			for (int i = 0; i < dbClass.length; i++) {
-				TableUtils.createTableIfNotExists(getConnectionSource(), dbClass[i]);
+				TableUtils.createTableIfNotExists(getConnectionSource(),
+						dbClass[i]);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -22,7 +22,8 @@ import com.pengjun.android.utils.AdLoggerUtils;
 
 public class CameraCapture implements PreviewCallback {
 
-	public static Logger logger = AdLoggerUtils.getCameraLogger("videoCapture");
+	public static Logger logger = AdLoggerUtils
+			.getCameraLogger("cameraCapture");
 
 	public interface CallBack {
 

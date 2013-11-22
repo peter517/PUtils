@@ -20,6 +20,22 @@ import com.pengjun.android.utils.DebugUtils;
 
 public class FileUtils {
 
+	public static String getAppCachePath(Context context) {
+		return mendPath(context.getApplicationContext().getFilesDir()
+				.getAbsolutePath())
+				+ "cache/";
+	}
+
+	public static String mendPath(String path) {
+		assert path != null : "path!=null";
+		String newPath = path;
+		if (!newPath.endsWith("/")) {
+			newPath += '/';
+		}
+
+		return newPath;
+	}
+
 	public static String getExtensionName(String filename) {
 		if ((filename != null) && (filename.length() > 0)) {
 			int dot = filename.lastIndexOf('.');
@@ -121,6 +137,7 @@ public class FileUtils {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> List<T> readListFromFile(String filename) {
 		List<T> list = null;
 		ObjectInputStream in = null;

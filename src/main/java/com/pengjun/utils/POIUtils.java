@@ -15,7 +15,8 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class POIUtils {
 
-	public static List<String> readWordDocx(String sourceFileFullPath) throws IOException {
+	public static List<String> readWordDocx(String sourceFileFullPath)
+			throws IOException {
 
 		ArrayList<String> strList = new ArrayList<String>();
 
@@ -47,12 +48,13 @@ public class POIUtils {
 		return strList;
 	}
 
-	public static void writeWordDocx(String fileFullPath, List<String> strList) throws FileNotFoundException {
+	public static void writeWordDocx(String fileFullPath, List<String> strList)
+			throws FileNotFoundException {
 		writeWordDocx(fileFullPath, strList, false, -1);
 	}
 
-	public static void writeWordDocx(String fileFullPath, List<String> strList, boolean indent, int indentUnit)
-			throws FileNotFoundException {
+	public static void writeWordDocx(String fileFullPath, List<String> strList,
+			boolean indent, int indentUnit) throws FileNotFoundException {
 
 		XWPFDocument document = new XWPFDocument();
 		FileOutputStream outStream = null;
@@ -85,24 +87,22 @@ public class POIUtils {
 
 			XWPFParagraph paragraph = document.createParagraph();
 			if (indent) {
-				paragraph.setIndentationFirstLine(getStartingBlankCharsNum(str) * indentUnit);// indent如果太小，看不出来！因此乘一个因子
+				paragraph.setIndentationFirstLine(getStartingBlankCharsNum(str)
+						* indentUnit);// indent如果太小，看不出来！因此乘一个因子
 			}
 			//
 			XWPFRun r = paragraph.createRun();
 			// r.setColor(...);
 			r.setFontFamily("Times New Roman");
 			r.setFontSize(10);
-			if (str.startsWith("一、") || str.startsWith("二、") || str.startsWith("三、") || str.startsWith("四、")
-					|| str.startsWith("五、") || str.startsWith("六、") || str.startsWith("七、")
-					|| str.startsWith("八、") || str.startsWith("九、") || str.startsWith("十、")) {
+			if (str.startsWith("一、") || str.startsWith("二、")
+					|| str.startsWith("三、") || str.startsWith("四、")
+					|| str.startsWith("五、") || str.startsWith("六、")
+					|| str.startsWith("七、") || str.startsWith("八、")
+					|| str.startsWith("九、") || str.startsWith("十、")) {
 				r.setBold(true);
 			}
-			// r.setUnderline(u);
-			if (str == null) {
-				r.setText("");
-			} else {
-				r.setText(str.trim());
-			}
+			r.setText(str.trim());
 		}
 
 		try {

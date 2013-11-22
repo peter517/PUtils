@@ -25,10 +25,14 @@ public class AdImageUtils {
 
 	public static Bitmap drawable2Bitmap(Drawable drawable) {
 		Bitmap bitmap = Bitmap
-				.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), drawable
-						.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+				.createBitmap(
+						drawable.getIntrinsicWidth(),
+						drawable.getIntrinsicHeight(),
+						drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+								: Bitmap.Config.RGB_565);
 		Canvas canvas = new Canvas(bitmap);
-		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+				drawable.getIntrinsicHeight());
 		drawable.draw(canvas);
 		return bitmap;
 	}
@@ -60,22 +64,24 @@ public class AdImageUtils {
 		int width = oriBmp.getWidth();
 		int height = oriBmp.getHeight();
 
-		Bitmap dstBmp = Bitmap.createBitmap(width, (int) (height * (1 + ref2OriRadio)), Config.ARGB_8888);
+		Bitmap dstBmp = Bitmap.createBitmap(width,
+				(int) (height * (1 + ref2OriRadio)), Config.ARGB_8888);
 		Canvas canvas = new Canvas(dstBmp);
 		canvas.drawBitmap(oriBmp, 0, 0, null);
 
 		// create reflect bmp
 		Matrix matrix = new Matrix();
 		matrix.preScale(1, -1);
-		Bitmap reflectionBmp = Bitmap.createBitmap(oriBmp, 0, (int) (height * (1 - ref2OriRadio)), width,
+		Bitmap reflectionBmp = Bitmap.createBitmap(oriBmp, 0,
+				(int) (height * (1 - ref2OriRadio)), width,
 				(int) (height * ref2OriRadio), matrix, false);
 		canvas.drawBitmap(reflectionBmp, 0, height, null);
 		reflectionBmp.recycle();
 
 		// make the gradual change effect
 		Paint paint = new Paint();
-		LinearGradient shader = new LinearGradient(0, oriBmp.getHeight(), 0, dstBmp.getHeight(), 0x70ffffff,
-				0x00ffffff, TileMode.CLAMP);
+		LinearGradient shader = new LinearGradient(0, oriBmp.getHeight(), 0,
+				dstBmp.getHeight(), 0x70ffffff, 0x00ffffff, TileMode.CLAMP);
 		paint.setShader(shader);
 		paint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
 		canvas.drawRect(0, height, width, dstBmp.getHeight(), paint);
@@ -83,11 +89,11 @@ public class AdImageUtils {
 		return dstBmp;
 	}
 
-	public static Bitmap combineImageForeFirst(Bitmap backgoundBmp, Bitmap foregoundBmp, Rect dstRect,
-			Rect fRect) {
+	public static Bitmap combineImageForeFirst(Bitmap backgoundBmp,
+			Bitmap foregoundBmp, Rect dstRect, Rect fRect) {
 
-		Bitmap combineImage = Bitmap.createBitmap(backgoundBmp.getWidth(), backgoundBmp.getHeight(),
-				Config.ARGB_8888);
+		Bitmap combineImage = Bitmap.createBitmap(backgoundBmp.getWidth(),
+				backgoundBmp.getHeight(), Config.ARGB_8888);
 
 		Canvas canvas = new Canvas(combineImage);
 		canvas.drawBitmap(foregoundBmp, fRect, dstRect, null);
@@ -96,11 +102,11 @@ public class AdImageUtils {
 		return combineImage;
 	}
 
-	public static Bitmap combineImageBackFirst(Bitmap backgoundBmp, Bitmap foregoundBmp, Rect bRect,
-			Rect fRect) {
+	public static Bitmap combineImageBackFirst(Bitmap backgoundBmp,
+			Bitmap foregoundBmp, Rect bRect, Rect fRect) {
 
-		Bitmap combineImage = Bitmap.createBitmap(backgoundBmp.getWidth(), backgoundBmp.getHeight(),
-				Config.ARGB_8888);
+		Bitmap combineImage = Bitmap.createBitmap(backgoundBmp.getWidth(),
+				backgoundBmp.getHeight(), Config.ARGB_8888);
 
 		Canvas canvas = new Canvas(combineImage);
 		canvas.drawBitmap(backgoundBmp, 0, 0, null);
@@ -112,7 +118,8 @@ public class AdImageUtils {
 	public static Bitmap rotateBitmap(Bitmap bmp, float degree) {
 		Matrix matrix = new Matrix();
 		matrix.postRotate(degree);
-		return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+		return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
+				matrix, true);
 	}
 
 	public static Bitmap reverseBitmap(Bitmap bmp, int flag) {
@@ -131,20 +138,23 @@ public class AdImageUtils {
 		if (floats != null) {
 			Matrix matrix = new Matrix();
 			matrix.setValues(floats);
-			return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+			return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(),
+					bmp.getHeight(), matrix, true);
 		}
 
 		return null;
 	}
 
-	public static Bitmap scaleBitmap(Bitmap source, int targetWidth, int targetHeight) {
+	public static Bitmap scaleBitmap(Bitmap source, int targetWidth,
+			int targetHeight) {
 		int sourceWidth = source.getWidth();
 		int sourceHeight = source.getHeight();
 		float scaleWidth = ((float) targetWidth) / sourceWidth;
 		float scaleHeight = ((float) targetHeight) / sourceHeight;
 		Matrix matrix = new Matrix();
 		matrix.postScale(scaleWidth, scaleHeight);
-		Bitmap result = Bitmap.createBitmap(source, 0, 0, sourceWidth, sourceHeight, matrix, true);
+		Bitmap result = Bitmap.createBitmap(source, 0, 0, sourceWidth,
+				sourceHeight, matrix, true);
 		source.recycle();
 		source = null;
 		return result;
