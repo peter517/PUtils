@@ -54,8 +54,8 @@ public final class DisplayDownloader extends AbstractCircularStackDownloader {
 		final String url = paramMap.get(URL).toString();
 
 		try {
-			HttpGet httpRequest = new HttpGet(url);
-			HttpResponse httpResponse = httpClient.execute(httpRequest);
+			HttpGet httpGet = new HttpGet(url);
+			HttpResponse httpResponse = httpClient.execute(httpGet);
 			if (httpResponse == null) {
 				request.error = Error.NetworkError;
 				return;

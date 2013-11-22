@@ -42,4 +42,5 @@ public class DeviceUtils {
 		}
 		return level;
 	}
+
 }

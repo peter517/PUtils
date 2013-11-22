@@ -253,14 +253,14 @@ public class FileUtils {
 		return true;
 	}
 
-	public static String readFile(String filename) {
+	public static byte[] readFile(File file) {
 
 		FileInputStream in = null;
 		byte[] data = null;
 		ByteArrayOutputStream out = null;
 
 		try {
-			in = new FileInputStream(filename);
+			in = new FileInputStream(file);
 			byte[] buf = new byte[1024];
 			int len = 0;
 			out = new ByteArrayOutputStream();
@@ -279,6 +279,6 @@ public class FileUtils {
 			close(out);
 		}
 
-		return new String(data);
+		return data;
 	}
 }

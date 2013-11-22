@@ -3,6 +3,7 @@ package com.pengjun.android.utils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import android.util.Log;
 import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class AdLoggerUtils {
@@ -45,6 +46,14 @@ public class AdLoggerUtils {
 
 	public static Logger getCameraLogger(String tag) {
 		return Logger.getLogger(tag);
+	}
+
+	public static void printFromPJ(String info) {
+		Log.i("pj", info);
+	}
+
+	public static void printFromPJ(String tag, String info) {
+		Logger.getLogger(tag).info(info);
 	}
 
 }
