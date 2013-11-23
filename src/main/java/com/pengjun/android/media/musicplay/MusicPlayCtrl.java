@@ -233,4 +233,16 @@ public class MusicPlayCtrl {
 		return false;
 	}
 
+	/**
+	 * Example Code
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		// MusicPlayCtrl musicPlayCtrl =
+		// MusicPlayCtrl.getMusicPlayCtrl(context);
+
+	}
+
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
@@ -155,6 +156,44 @@ public class AdResourceUtils {
 	public static int px2dip(Context context, float pxValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (pxValue / scale + 0.5f);
+	}
+
+	public static void setSpeakerVolume(Context context, int level) {
+		if (context == null) {
+			return;
+		}
+		AudioManager audioManager = (AudioManager) context
+				.getSystemService(Context.AUDIO_SERVICE);
+
+		if (audioManager != null) {
+			audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, level, 0);
+		}
+	}
+
+	public static int getCurrnetSpeakerVolume(Context context) {
+
+		if (context == null) {
+			return -1;
+		}
+		AudioManager audioManager = (AudioManager) context
+				.getSystemService(Context.AUDIO_SERVICE);
+		return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+	}
+
+	public static int getMaxSpeakerVolume(Context context) {
+
+		if (context == null) {
+			return -1;
+		}
+
+		int level = -1;
+		AudioManager audioManager = (AudioManager) context
+				.getSystemService(Context.AUDIO_SERVICE);
+
+		if (audioManager != null) {
+			level = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		}
+		return level;
 	}
 
 }

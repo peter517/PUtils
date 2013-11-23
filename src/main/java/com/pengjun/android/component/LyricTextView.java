@@ -549,4 +549,21 @@ public class LyricTextView extends TextView {
 		}
 	}
 
+	/**
+	 * Example Code
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		// LyricTextView tvLyric = new LyicTextView(args[0]);
+		//
+		// tvLyric.setVisibility(View.VISIBLE);
+		// tvLyric.setText("");
+		// tvLyric.setSong(song);
+		// tvLyric.setScrollOffset(5);
+
+		// tvLyric.update(playCurTime);
+	}
+
 }

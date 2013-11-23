@@ -16,8 +16,6 @@ import java.util.List;
 import android.content.Context;
 import android.os.Environment;
 
-import com.pengjun.android.utils.DebugUtils;
-
 public class FileUtils {
 
 	public static String getAppCachePath(Context context) {
@@ -108,14 +106,6 @@ public class FileUtils {
 	public static String getFileExtension(String name) {
 		int index = name.lastIndexOf('.');
 		return index == -1 ? "" : name.substring(index + 1).toLowerCase();
-	}
-
-	public static void printCurAppDir(Context context) {
-		Context cont = context.getApplicationContext();
-		DebugUtils.printFromPJ("cont.getCacheDir() = " + cont.getCacheDir());
-		DebugUtils.printFromPJ("cont.getDatabasePath = "
-				+ cont.getDatabasePath("temp"));
-		DebugUtils.printFromPJ("cont.getFilesDir() = " + cont.getFilesDir());
 	}
 
 	public static <T> boolean writeListToFile(List<T> list, String filename) {
