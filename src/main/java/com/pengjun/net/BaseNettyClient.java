@@ -13,7 +13,7 @@ public class BaseNettyClient {
 
 	private String serverIp;
 	private int port;
-
+ 
 	protected BaseNettyClient(String serverIp, int port) {
 		this.serverIp = serverIp;
 		this.port = port;

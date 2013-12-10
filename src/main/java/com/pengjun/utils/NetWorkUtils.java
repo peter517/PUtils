@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -120,5 +123,23 @@ public class NetWorkUtils {
 			httpGet.abort();
 		}
 		return null;
+	}
+
+	public static void sendUDPData(String ip, int port, byte[] data)
+			throws IOException {
+		DatagramSocket ds = new DatagramSocket(port);
+		DatagramPacket dp = new DatagramPacket(data, data.length,
+				InetAddress.getByName(ip), port);
+		ds.send(dp);
+		ds.close();
+	}
+
+	public static byte[] recvUDPData(int port) throws IOException {
+		DatagramSocket ds = new DatagramSocket(port);
+		byte[] buf = new byte[1024];
+		DatagramPacket dp = new DatagramPacket(buf, 1024);
+		ds.receive(dp);
+		ds.close();
+		return dp.getData();
 	}
 }

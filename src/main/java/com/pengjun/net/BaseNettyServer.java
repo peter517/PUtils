@@ -41,10 +41,12 @@ public class BaseNettyServer {
 
 	protected void stop() {
 		try {
-			if (channel != null)
+			if (channel != null) {
 				channel.close().awaitUninterruptibly();
-			if (bootstrap != null)
+			}
+			if (bootstrap != null) {
 				bootstrap.releaseExternalResources();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
