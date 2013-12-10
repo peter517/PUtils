@@ -24,11 +24,13 @@ public class BaseNettyClient {
 
 	public Channel connect(ChannelPipelineFactory pipelineFactory) {
 
-		bootstrap = new ClientBootstrap(new NioClientSocketChannelFactory(Executors.newCachedThreadPool(),
+		bootstrap = new ClientBootstrap(new NioClientSocketChannelFactory(
+				Executors.newCachedThreadPool(),
 				Executors.newCachedThreadPool()));
 		bootstrap.setPipelineFactory(pipelineFactory);
 
-		ChannelFuture connectFuture = bootstrap.connect(new InetSocketAddress(serverIp, port));
+		ChannelFuture connectFuture = bootstrap.connect(new InetSocketAddress(
+				serverIp, port));
 		channel = connectFuture.awaitUninterruptibly().getChannel();
 		return channel;
 	}
