@@ -1,6 +1,5 @@
 package com.pengjun.android.eventsystem;
 
-
 public class EventPublisher {
 
 	private EventHandler messageHandler = EventHandler.getInstance();
@@ -19,9 +18,7 @@ public class EventPublisher {
 	}
 
 	public void publishEvent(Event event) {
-
 		messageHandler.publishEvent(event);
-
 	}
 
 	public void removeAllEvent() {
