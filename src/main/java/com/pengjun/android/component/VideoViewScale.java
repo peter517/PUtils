@@ -79,10 +79,12 @@ public class VideoViewScale {
 
 					if (capturedFrameBmp != null) {
 						ivCapturedFrame.setBackgroundDrawable(AdImageUtils
-								.bitmap2Drawable(capturedFrameBmp));
+								.bitmap2Drawable(AdImageUtils.reverseBitmap(
+										capturedFrameBmp, 0)));
 					}
 
 					flVideo.addView(ivCapturedFrame, llParams);
+
 					ivCapturedFrame.startAnimation(smallerScaleAnimation);
 
 					break;
@@ -116,7 +118,8 @@ public class VideoViewScale {
 
 					if (capturedFrameBmp != null) {
 						ivCapturedFrame.setBackgroundDrawable(AdImageUtils
-								.bitmap2Drawable(capturedFrameBmp));
+								.bitmap2Drawable(AdImageUtils.reverseBitmap(
+										capturedFrameBmp, 0)));
 					}
 
 					flVideo.addView(ivCapturedFrame, llParams);
@@ -154,12 +157,16 @@ public class VideoViewScale {
 
 		this.capturedFrameBmp = capturedFrameBmp;
 
+		float a = (float) (marginRect.top) / dstSize.height;
+
 		smallerScaleAnimation = new ScaleAnimation(1.0f,
 				(float) (dstSize.width) / iniSize.width, 1.0f,
 				(float) (dstSize.height) / iniSize.height,
 				Animation.RELATIVE_TO_SELF, (float) (marginRect.left)
-						/ dstSize.width, Animation.RELATIVE_TO_SELF,
-				(float) (marginRect.top) / dstSize.height);
+						/ dstSize.width / (iniSize.width / dstSize.width - 1),
+				Animation.RELATIVE_TO_SELF, (float) (marginRect.top)
+						/ dstSize.height
+						/ (iniSize.height / dstSize.height - 1));
 		smallerScaleAnimation.setDuration(duration);
 		smallerScaleAnimation.setAnimationListener(new AnimationListener() {
 
@@ -193,9 +200,11 @@ public class VideoViewScale {
 		largerScaleAnimation = new ScaleAnimation(1.0f, (float) (iniSize.width)
 				/ dstSize.width, 1.0f, (float) (iniSize.height)
 				/ dstSize.height, Animation.RELATIVE_TO_SELF,
-				(float) (marginRect.left) / dstSize.width,
+				(float) (marginRect.left) / dstSize.width
+						/ (iniSize.width / dstSize.width - 1),
 				Animation.RELATIVE_TO_SELF, (float) (marginRect.top)
-						/ dstSize.height);
+						/ dstSize.height
+						/ (iniSize.height / dstSize.height - 1));
 
 		largerScaleAnimation.setDuration(duration);
 		largerScaleAnimation.setFillAfter(true);

@@ -15,4 +15,14 @@ public class FragmentDirector {
 		ft.commitAllowingStateLoss();
 	}
 
+	// @SuppressLint("NewApi")
+	// public static void replaceFragment(Activity activity, int layoutId,
+	// android.app.Fragment fragment) {
+	// FragmentManager fragmentManager = activity.getFragmentManager();
+	// android.app.FragmentTransaction ft = fragmentManager.beginTransaction();
+	// ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+	// ft.replace(layoutId, fragment);
+	// ft.commitAllowingStateLoss();
+	// }
+
 }

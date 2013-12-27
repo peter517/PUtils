@@ -54,7 +54,7 @@ public class MusicPlayCtrl {
 			musicPlayService = ((MusicPlayService.MusicBinder) service)
 					.getService();
 			context.sendBroadcast(new Intent(BD_SERVICE_BINDED));
-			AdLoggerUtils.printFromPJ(TAG, "onServiceConnected");
+			AdLoggerUtils.printFromTag(TAG, "onServiceConnected");
 		}
 	};
 

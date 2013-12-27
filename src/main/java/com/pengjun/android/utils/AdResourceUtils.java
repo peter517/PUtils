@@ -14,8 +14,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
-
-import com.pengjun.utils.StringUtils;
+import android.provider.Settings;
+import android.provider.Settings.Secure;
 
 public class AdResourceUtils {
 
@@ -33,7 +33,7 @@ public class AdResourceUtils {
 
 	public static String getSharedPreferencesString(Context context, String key) {
 		return context.getSharedPreferences(SP_FIRST_START, 0).getString(key,
-				StringUtils.NULL_STRING);
+				"");
 	}
 
 	public static void putSharedPreferencesString(Context context, String key,
@@ -116,6 +116,27 @@ public class AdResourceUtils {
 		} catch (SocketException ex) {
 		}
 		return localIPs;
+	}
+
+	public static String getAndroidId(Context context) {
+		String androidId = Secure.getString(context.getContentResolver(),
+				Secure.ANDROID_ID);
+		return androidId;
+	}
+
+	public static String getDisplayName(Context context) {
+
+		String displayName = null;
+		try {
+			displayName = Settings.System.getString(
+					context.getContentResolver(), "device_name");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (displayName == null || displayName.length() == 0) {
+			displayName = "未命名设备";
+		}
+		return displayName;
 	}
 
 	public static boolean hasExternalStorage() {

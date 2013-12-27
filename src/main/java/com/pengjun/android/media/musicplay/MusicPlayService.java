@@ -72,10 +72,10 @@ public class MusicPlayService extends Service {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
-			AdLoggerUtils.printFromPJ(TAG, action);
+			AdLoggerUtils.printFromTag(TAG, action);
 			if (MusicPlayCtrl.BD_NEW_APPLICATION.equals(action)) {
 				if (mPlayer != null) {
-					AdLoggerUtils.printFromPJ(TAG, "onDestroy");
+					AdLoggerUtils.printFromTag(TAG, "onDestroy");
 					MusicPlayService.this.onDestroy();
 				}
 			}
@@ -86,7 +86,7 @@ public class MusicPlayService extends Service {
 	private void releasePlayer() {
 
 		if (mPlayer != null) {
-			AdLoggerUtils.printFromPJ(TAG, "releasePlayer");
+			AdLoggerUtils.printFromTag(TAG, "releasePlayer");
 			mPlayer.release();
 			mPlayer = null;
 		}
@@ -97,7 +97,7 @@ public class MusicPlayService extends Service {
 
 		super.onCreate();
 
-		AdLoggerUtils.printFromPJ(TAG, "onCreate " + (mPlayer == null));
+		AdLoggerUtils.printFromTag(TAG, "onCreate " + (mPlayer == null));
 		mPlayer = new MultiPlayer();
 		audioManager = (AudioManager) this
 				.getSystemService(Context.AUDIO_SERVICE);
@@ -119,7 +119,7 @@ public class MusicPlayService extends Service {
 
 	@Override
 	public void onDestroy() {
-		AdLoggerUtils.printFromPJ(TAG, "onDestroy");
+		AdLoggerUtils.printFromTag(TAG, "onDestroy");
 		releasePlayer();
 		unregisterReceiver(conReceiver);
 		unregisterReceiver(mReceiver);
@@ -311,7 +311,7 @@ public class MusicPlayService extends Service {
 
 	public void setScreenSaverOn() {
 
-		AdLoggerUtils.printFromPJ(TAG, "setScreenSaverOn");
+		AdLoggerUtils.printFromTag(TAG, "setScreenSaverOn");
 		if (mWakeLock != null) {
 			try {
 				mWakeLock.release();
@@ -323,7 +323,7 @@ public class MusicPlayService extends Service {
 	}
 
 	public void setScreenSaverOff() {
-		AdLoggerUtils.printFromPJ(TAG, "setScreenSaverOff");
+		AdLoggerUtils.printFromTag(TAG, "setScreenSaverOff");
 		try {
 			if (mWakeLock == null) {
 				PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -400,7 +400,7 @@ public class MusicPlayService extends Service {
 				} catch (IllegalStateException e) {
 					// i have no idea,wtf!
 					e.printStackTrace();
-					AdLoggerUtils.printFromPJ(TAG,
+					AdLoggerUtils.printFromTag(TAG,
 							"setDataSource IllegalStateException");
 					pause();
 				}
@@ -421,15 +421,15 @@ public class MusicPlayService extends Service {
 						case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
 
 							mPlayer.pause();
-							AdLoggerUtils.printFromPJ(TAG,
+							AdLoggerUtils.printFromTag(TAG,
 									"MediaPlayer.MEDIA_ERROR_SERVER_DIED");
 							break;
 						case DATA_SOURCE_ERROR:
 							mPlayer.reset();
-							AdLoggerUtils.printFromPJ(TAG, "DATA_SOURCE_ERROR");
+							AdLoggerUtils.printFromTag(TAG, "DATA_SOURCE_ERROR");
 							break;
 						default:
-							AdLoggerUtils.printFromPJ(TAG, "onError what: " + what);
+							AdLoggerUtils.printFromTag(TAG, "onError what: " + what);
 							if (retryCount < 10) {
 								try {
 									Log.d(TAG,
@@ -441,7 +441,7 @@ public class MusicPlayService extends Service {
 									e.printStackTrace();
 								}
 							} else {
-								AdLoggerUtils.printFromPJ(TAG,
+								AdLoggerUtils.printFromTag(TAG,
 										"mediaPlayer source error");
 							}
 							break;
@@ -477,7 +477,7 @@ public class MusicPlayService extends Service {
 		public void start() {
 			if (mIsInitialized) {
 				super.start();
-				AdLoggerUtils.printFromPJ(TAG, "start");
+				AdLoggerUtils.printFromTag(TAG, "start");
 				updateScreenSaver();
 			}
 		}
@@ -486,7 +486,7 @@ public class MusicPlayService extends Service {
 		public void pause() {
 			if (mIsInitialized) {
 				super.pause();
-				AdLoggerUtils.printFromPJ(TAG, "pause");
+				AdLoggerUtils.printFromTag(TAG, "pause");
 				updateScreenSaver();
 			}
 		}
@@ -495,7 +495,7 @@ public class MusicPlayService extends Service {
 		public void stop() {
 			if (mIsInitialized) {
 				super.reset();
-				AdLoggerUtils.printFromPJ(TAG, "stop");
+				AdLoggerUtils.printFromTag(TAG, "stop");
 				updateScreenSaver();
 				mIsInitialized = false;
 			}
