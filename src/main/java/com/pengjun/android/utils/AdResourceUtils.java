@@ -64,7 +64,7 @@ public class AdResourceUtils {
 		return isRunning;
 	}
 
-	public static boolean checkNetwork(Context context, boolean isNotify) {
+	public static boolean checkNetwork(Context context) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
@@ -109,11 +109,16 @@ public class AdResourceUtils {
 						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
 					InetAddress inetAddress = enumIpAddr.nextElement();
 					if (!inetAddress.isLoopbackAddress()) {
-						localIPs = inetAddress.getHostAddress().toString();
+						String ip = inetAddress.getHostAddress().toString();
+						if (ip.matches("[0-9]*\\.[0-9]*\\.[0-9]*\\.[0-9]*")) {
+							localIPs = ip;
+							break;
+						}
 					}
 				}
 			}
 		} catch (SocketException ex) {
+			ex.printStackTrace();
 		}
 		return localIPs;
 	}

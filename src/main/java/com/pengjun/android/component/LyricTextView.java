@@ -260,7 +260,7 @@ public class LyricTextView extends TextView {
 		list.add(new Sentence(song.getSongName(), Integer.MIN_VALUE,
 				Integer.MAX_VALUE));
 		list.add(new Sentence("正在搜索歌词...", Integer.MIN_VALUE, Integer.MAX_VALUE));
-		if (AdResourceUtils.checkNetwork(context, false)) {
+		if (AdResourceUtils.checkNetwork(context)) {
 			task = new LoadLyricTask();
 			task.execute();
 		}

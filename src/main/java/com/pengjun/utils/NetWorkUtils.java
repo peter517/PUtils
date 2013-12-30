@@ -134,12 +134,12 @@ public class NetWorkUtils {
 		ds.close();
 	}
 
-	public static byte[] recvUDPData(int port) throws IOException {
+	public static DatagramPacket recvUDPData(int port) throws IOException {
 		DatagramSocket ds = new DatagramSocket(port);
 		byte[] buf = new byte[1024];
 		DatagramPacket dp = new DatagramPacket(buf, 1024);
 		ds.receive(dp);
 		ds.close();
-		return dp.getData();
+		return dp;
 	}
 }
