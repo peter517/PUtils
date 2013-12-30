@@ -426,12 +426,10 @@ public class MusicPlayService extends Service {
 							break;
 						case DATA_SOURCE_ERROR:
 							mPlayer.reset();
-							AdLoggerUtils
-									.printFromTag(TAG, "DATA_SOURCE_ERROR");
+							AdLoggerUtils.printFromTag(TAG, "DATA_SOURCE_ERROR");
 							break;
 						default:
-							AdLoggerUtils.printFromTag(TAG, "onError what: "
-									+ what);
+							AdLoggerUtils.printFromTag(TAG, "onError what: " + what);
 							if (retryCount < 10) {
 								try {
 									Log.d(TAG,
