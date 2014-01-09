@@ -10,18 +10,17 @@ import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class AdLoggerUtils {
 
-	public static void initLogger(boolean useLogCatAppender,
-			boolean useFileAppender) {
+	public static void initLogger(String projectName,
+			boolean useLogCatAppender, boolean useFileAppender) {
 
-		String projectName = "wp";
-		String filenameLog = Environment.getExternalStorageDirectory()
+		String logPath = Environment.getExternalStorageDirectory()
 				+ File.separator + projectName + File.separator + "logs"
 				+ File.separator + projectName + ".log";
 
 		if (AdResourceUtils.hasExternalStorage()) {
 			LogConfigurator logConfigurator = new LogConfigurator();
 
-			logConfigurator.setFileName(filenameLog);
+			logConfigurator.setFileName(logPath);
 			logConfigurator.setRootLevel(Level.DEBUG);
 			logConfigurator.setLevel("org.apache", Level.ERROR);
 			logConfigurator.setFilePattern("%d %-5p [%c{2}] %m [%F:%L] %n");
@@ -34,7 +33,7 @@ public class AdLoggerUtils {
 			logConfigurator.setUseFileAppender(useFileAppender);
 			logConfigurator.configure();
 			Logger logger = Logger.getLogger(projectName);
-			logger.info("logger start");
+			logger.info("-----------------logger start-----------------");
 		}
 
 	}
@@ -52,16 +51,8 @@ public class AdLoggerUtils {
 		}
 	}
 
-	public static Logger getCameraLogger(String tag) {
-		return Logger.getLogger(tag);
-	}
-
-	public static void printFromMusicPlay(String info) {
-		Logger.getLogger("musicplay").info(info);
-	}
-
 	public static void printFromTag(String tag, String info) {
-		Logger.getLogger(tag).info(info);
+		Logger.getLogger(tag).debug(info);
 	}
 
 	public static Logger getLogger(String name) {
