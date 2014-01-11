@@ -2,9 +2,9 @@ package com.pengjun.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 public class SystemUtils {
-
+	 
 	public static List<StringBuffer> getCurThreadListInfo() {
 		ThreadGroup group = Thread.currentThread().getThreadGroup();
 		while (group.getParent() != null) {
@@ -36,4 +36,5 @@ public class SystemUtils {
 
 		return sbList;
 	}
+	
 }
