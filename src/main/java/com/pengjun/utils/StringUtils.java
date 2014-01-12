@@ -10,10 +10,16 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 public class StringUtils {
 
 	public static final String NULL_STRING = "";
 	
+	public static String getObjectFieldValue(Object object){
+		return  ReflectionToStringBuilder.toString(object, ToStringStyle.MULTI_LINE_STYLE);
+	}
 	/***
 	 * encode by Base64
 	 */
