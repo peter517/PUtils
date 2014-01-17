@@ -4,6 +4,10 @@ import java.util.HashMap;
 
 public class CollectionUtils {
 
+	public static <k, v> HashMap<k, v> newHashMap() {
+		return new HashMap<k, v>();
+	}
+
 	public static class CountIntegerMap extends HashMap<String, Integer> {
 
 		private static final long serialVersionUID = 1L;
