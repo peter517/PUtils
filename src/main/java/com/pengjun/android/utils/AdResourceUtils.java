@@ -1,8 +1,12 @@
 package com.pengjun.android.utils;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -27,6 +31,50 @@ public class AdResourceUtils {
 			Color.DKGRAY, Color.CYAN, Color.GREEN, Color.GRAY, Color.RED,
 			Color.WHITE, Color.LTGRAY };
 	// res
+	private static List<String> listSystemBuildProperty = new ArrayList<String>();
+
+	public static synchronized List<String> getSystemBuildProperties() {
+		if (!listSystemBuildProperty.isEmpty())
+			return listSystemBuildProperty;
+
+		String fileName = "/system/build.prop";
+		String line;
+		BufferedReader localBufferedReader = null;
+		try {
+			localBufferedReader = new BufferedReader(new FileReader(fileName),
+					8192);
+			line = localBufferedReader.readLine();
+			while (line != null) {
+				line = line.trim().replace("\n\r", "");
+				listSystemBuildProperty.add(line);
+				line = localBufferedReader.readLine();
+			}
+		} catch (IOException e) {
+		} finally {
+			if (localBufferedReader != null)
+				try {
+					localBufferedReader.close();
+				} catch (IOException e) {
+				}
+		}
+
+		return listSystemBuildProperty;
+	}
+
+	public static String parseSystemBuildProperty(String field) {
+		if (field == null)
+			return "";
+		List<String> listProperty = getSystemBuildProperties();
+		for (String property : listProperty) {
+			if (property.startsWith(field)) {
+				String[] arr = property.split("=");
+				if (arr.length > 1)
+					return arr[1].trim();
+			}
+		}
+
+		return "";
+	}
 
 	// use SharedPreferences to check first install
 	public final static String SP_FIRST_START = "firstStart";
