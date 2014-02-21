@@ -23,6 +23,18 @@ import android.graphics.drawable.Drawable;
 
 public class AdImageUtils {
 
+	public static void writeBitmap2File(Bitmap bitmap, File file) {
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(file);
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+			fos.flush();
+			fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static Bitmap drawable2Bitmap(Drawable drawable) {
 		Bitmap bitmap = Bitmap
 				.createBitmap(
