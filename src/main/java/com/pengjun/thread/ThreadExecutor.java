@@ -1,6 +1,7 @@
 package com.pengjun.thread;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
@@ -43,6 +44,7 @@ public class ThreadExecutor {
 		return exec.submit(c).get(waitSeconds, TimeUnit.SECONDS);
 	}
 
+	// for a list of tasks to be submitted
 	public <T> T submitCallable(List<Callable<T>> cList)
 			throws InterruptedException, ExecutionException {
 		for (Callable<T> c : cList) {
@@ -65,4 +67,20 @@ public class ThreadExecutor {
 		this.c = c;
 	}
 
+	public static void main(String[] args) {
+		ExecutorService threadPool = Executors.newSingleThreadExecutor();
+		Future<Integer> future = threadPool.submit(new Callable<Integer>() {
+			public Integer call() throws Exception {
+				return new Random().nextInt(100);
+			}
+		});
+		try {
+			Thread.sleep(5000);// 可能做一些事情
+			System.out.println(future.get());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+	}
 }
