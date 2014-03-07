@@ -17,24 +17,23 @@ public class AdLoggerUtils {
 				+ File.separator + projectName + File.separator + "logs"
 				+ File.separator + projectName + ".log";
 
+		LogConfigurator logConfigurator = new LogConfigurator();
+
+		logConfigurator.setFileName(logPath);
+		logConfigurator.setRootLevel(Level.DEBUG);
+		logConfigurator.setLevel("org.apache", Level.ERROR);
+		logConfigurator.setFilePattern("%d %-5p [%c{2}] %m [%F:%L] %n");
+		logConfigurator.setMaxFileSize(1024 * 1024 * 5);
+		logConfigurator.setImmediateFlush(true);
+
+		logConfigurator.setLogCatPattern("%m  [%F:%L: " + projectName + "] %n");
+		logConfigurator.setUseLogCatAppender(useLogCatAppender);
 		if (AdResourceUtils.hasExternalStorage()) {
-			LogConfigurator logConfigurator = new LogConfigurator();
-
-			logConfigurator.setFileName(logPath);
-			logConfigurator.setRootLevel(Level.DEBUG);
-			logConfigurator.setLevel("org.apache", Level.ERROR);
-			logConfigurator.setFilePattern("%d %-5p [%c{2}] %m [%F:%L] %n");
-			logConfigurator.setMaxFileSize(1024 * 1024 * 5);
-			logConfigurator.setImmediateFlush(true);
-
-			logConfigurator.setLogCatPattern("%m  [%F:%L: " + projectName
-					+ "] %n");
-			logConfigurator.setUseLogCatAppender(useLogCatAppender);
 			logConfigurator.setUseFileAppender(useFileAppender);
-			logConfigurator.configure();
-			Logger logger = Logger.getLogger(projectName);
-			logger.info("-----------------logger start-----------------");
 		}
+		logConfigurator.configure();
+		Logger logger = Logger.getLogger(projectName);
+		logger.info("-----------------logger start-----------------");
 
 	}
 
