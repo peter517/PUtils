@@ -10,17 +10,17 @@ public class TimeUtils {
 
 	public static final String TIME_STRING_FORMT = "%d-%02d-%02d-%02d-%02d-%02d";
 	public static final String DATE_STRING_FORMT = "%d-%02d-%02d";
-	public static final String DATE_FORMT = "yyyy-MM-dd";
-	public static final String YERA_MONTH_FORMT = "yyyy-MM";
-	public static final String YERA_FORMT = "yyyy";
-	public static final String HOUR_FORMT = "HH";
+	public static final String yyyyMMdd_FORMT = "yyyy-MM-dd";
+	public static final String yyyyMM_FORMT = "yyyy-MM";
+	public static final String yyyy_FORMT = "yyyy";
+	public static final String HH_FORMT = "HH";
 	public static final String TIME_SEPARATOR = "-";
 
-	private static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMT);
-	private static DateFormat yearMonthFormat = new SimpleDateFormat(
-			YERA_MONTH_FORMT);
-	private static DateFormat yearFormat = new SimpleDateFormat(YERA_FORMT);
-	private static DateFormat hourFormat = new SimpleDateFormat(HOUR_FORMT);
+	private static DateFormat yyyyMMddFormat = new SimpleDateFormat(
+			yyyyMMdd_FORMT);
+	private static DateFormat yyyyMMFormat = new SimpleDateFormat(yyyyMM_FORMT);
+	private static DateFormat yyyyFormat = new SimpleDateFormat(yyyy_FORMT);
+	private static DateFormat HHFormat = new SimpleDateFormat(HH_FORMT);
 
 	private final static Calendar calendar = Calendar.getInstance();
 
@@ -41,9 +41,9 @@ public class TimeUtils {
 				.valueOf((System.currentTimeMillis() - time) / 1000f + "秒");
 	}
 
-	public static Date string2Date(String dateStr) {
+	public static Date string2yyyyMMddDate(String dateStr) {
 		try {
-			return dateFormat.parse(dateStr);
+			return yyyyMMddFormat.parse(dateStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,7 +52,7 @@ public class TimeUtils {
 
 	public static String getCurHour() {
 		calendar.setTimeInMillis(System.currentTimeMillis());
-		return hourFormat.format(calendar.getTime());
+		return HHFormat.format(calendar.getTime());
 	}
 
 	public static int getDayOfWeek(long currentTimeMillis) {
@@ -63,7 +63,7 @@ public class TimeUtils {
 	public static String getLastMonthOfTodayStr() {
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.add(Calendar.MONTH, -1);
-		String str = dateFormat.format(calendar.getTime());
+		String str = yyyyMMddFormat.format(calendar.getTime());
 		calendar.add(Calendar.MONTH, 1);
 		return str;
 	}
@@ -71,7 +71,7 @@ public class TimeUtils {
 	public static String getLastWeekOfTodayStr() {
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.add(Calendar.WEEK_OF_YEAR, -1);
-		String str = dateFormat.format(calendar.getTime());
+		String str = yyyyMMddFormat.format(calendar.getTime());
 		calendar.add(Calendar.WEEK_OF_YEAR, 1);
 		return str;
 	}
@@ -79,7 +79,7 @@ public class TimeUtils {
 	public static String getLastDayStr() {
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
-		String str = dateFormat.format(calendar.getTime());
+		String str = yyyyMMddFormat.format(calendar.getTime());
 		calendar.add(Calendar.DAY_OF_MONTH, 1);
 		return str;
 	}
@@ -92,23 +92,28 @@ public class TimeUtils {
 	public static String getLastMonthStr() {
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		calendar.add(Calendar.MONTH, -1);
-		String str = yearMonthFormat.format(calendar.getTime());
+		String str = yyyyMMFormat.format(calendar.getTime());
 		calendar.add(Calendar.MONTH, 1);
 		return str;
 	}
 
-	public static Date string2YearMonthDate(String dateStr) {
+	public static Date string2yyyyMMDate(String dateStr) {
 		try {
-			return yearMonthFormat.parse(dateStr);
+			return yyyyMMFormat.parse(dateStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public static Date string2YearDate(String dateStr) {
+	public static String getDateStr(String formatStr) {
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		return new SimpleDateFormat(formatStr).format(calendar.getTime());
+	}
+
+	public static Date string2yyyyDate(String dateStr) {
 		try {
-			return yearFormat.parse(dateStr);
+			return yyyyFormat.parse(dateStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,7 +138,7 @@ public class TimeUtils {
 
 	public static String getCurMonthYearStr() {
 		calendar.setTimeInMillis(System.currentTimeMillis());
-		return yearMonthFormat.format(calendar.getTime());
+		return yyyyMMFormat.format(calendar.getTime());
 	}
 
 	public static String getCurDateStr() {

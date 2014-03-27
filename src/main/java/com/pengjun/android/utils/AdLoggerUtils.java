@@ -42,9 +42,9 @@ public class AdLoggerUtils {
 			return;
 		StackTraceElement[] arrTrace = e.getStackTrace();
 		if (e.getCause() != null)
-			logger.error("cause:" + e.getCause());
+			logger.error(e.getClass().getName() + " : " + e.getCause());
 		if (e.getMessage() != null)
-			logger.error("cause:" + e.getMessage());
+			logger.error(e.getClass().getName() + " : " + e.getMessage());
 		for (StackTraceElement trace : arrTrace) {
 			logger.error("\t" + trace);
 		}
