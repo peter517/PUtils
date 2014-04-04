@@ -165,6 +165,11 @@ public class TimeUtils {
 				+ calendar.get(Calendar.WEEK_OF_YEAR));
 	}
 
+	public static Date getDateFromLong(long time) {
+		calendar.setTimeInMillis(time);
+		return calendar.getTime();
+	}
+
 	public static String getCurMonthStr() {
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		return String.valueOf(calendar.get(Calendar.MONTH) + 1);
