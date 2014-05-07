@@ -1,6 +1,7 @@
 package com.pengjun.android.component;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -39,7 +40,7 @@ public class VideoViewScale {
 	private Animation alphaAnimation;
 	private ImageView ivCapturedFrame;
 	private Handler handler;
-	private Activity activity;
+	public Activity activity;
 	private Bitmap capturedFrameBmp;
 
 	private final int SMALLER_CAPTURE_FRAME = 0;
@@ -48,7 +49,7 @@ public class VideoViewScale {
 
 	private final int LARGER_CAPTURE_FRAME = 3;
 	private final int RESIZE_LARGER_CAPTURE_FRAME_AND_FADE_OUT_AND_RESIZE_LARGER_VIDEO_VIEW = 4;
-
+	private static String ANIMATION_FINISH = "animation_tag";
 	private ViewSize iniSize;
 	private ViewSize dstSize;
 	private Rect marginRect;
@@ -79,8 +80,7 @@ public class VideoViewScale {
 
 					if (capturedFrameBmp != null) {
 						ivCapturedFrame.setBackgroundDrawable(AdImageUtils
-								.bitmap2Drawable(AdImageUtils.reverseBitmap(
-										capturedFrameBmp, 0)));
+								.bitmap2Drawable(capturedFrameBmp));
 					}
 
 					flVideo.addView(ivCapturedFrame, llParams);
@@ -94,6 +94,7 @@ public class VideoViewScale {
 					llParams.setMargins(marginRect.left, marginRect.top,
 							marginRect.bottom, marginRect.right);
 					svVideo.setLayoutParams(llParams);
+
 					break;
 				case RESIZE_SMALLER_CAPTURE_FRAME_AND_FADE_OUT:
 
@@ -118,8 +119,7 @@ public class VideoViewScale {
 
 					if (capturedFrameBmp != null) {
 						ivCapturedFrame.setBackgroundDrawable(AdImageUtils
-								.bitmap2Drawable(AdImageUtils.reverseBitmap(
-										capturedFrameBmp, 0)));
+								.bitmap2Drawable(capturedFrameBmp));
 					}
 
 					flVideo.addView(ivCapturedFrame, llParams);
@@ -156,17 +156,14 @@ public class VideoViewScale {
 		Log.d(TAG, "smallerScale");
 
 		this.capturedFrameBmp = capturedFrameBmp;
-
-		float a = (float) (marginRect.top) / dstSize.height;
-
-		smallerScaleAnimation = new ScaleAnimation(1.0f,
-				(float) (dstSize.width) / iniSize.width, 1.0f,
-				(float) (dstSize.height) / iniSize.height,
+		smallerScaleAnimation = new ScaleAnimation(1.0f, (float) dstSize.width
+				/ iniSize.width, 1.0f, (float) dstSize.height / iniSize.height,
 				Animation.RELATIVE_TO_SELF, (float) (marginRect.left)
-						/ dstSize.width / (iniSize.width / dstSize.width - 1),
-				Animation.RELATIVE_TO_SELF, (float) (marginRect.top)
+						/ dstSize.width
+						/ ((float) iniSize.width / dstSize.width - 1),
+				Animation.RELATIVE_TO_SELF, (float) marginRect.top
 						/ dstSize.height
-						/ (iniSize.height / dstSize.height - 1));
+						/ ((float) iniSize.height / dstSize.height - 1));
 		smallerScaleAnimation.setDuration(duration);
 		smallerScaleAnimation.setAnimationListener(new AnimationListener() {
 
@@ -175,13 +172,18 @@ public class VideoViewScale {
 				Message msg = new Message();
 				msg.what = RESIZE_SMALLER_VIDEO_VIEW;
 				handler.sendMessageDelayed(msg, 0);
+
 			}
 
 			@Override
 			public void onAnimationEnd(Animation animation) {
+
 				Message msg = new Message();
 				msg.what = RESIZE_SMALLER_CAPTURE_FRAME_AND_FADE_OUT;
 				handler.sendMessageDelayed(msg, 0);
+				Intent intent = new Intent();
+				intent.setAction(ANIMATION_FINISH);
+				activity.sendBroadcast(intent);
 			}
 
 			@Override
@@ -198,13 +200,13 @@ public class VideoViewScale {
 		this.capturedFrameBmp = capturedFrameBmp;
 
 		largerScaleAnimation = new ScaleAnimation(1.0f, (float) (iniSize.width)
-				/ dstSize.width, 1.0f, (float) (iniSize.height)
-				/ dstSize.height, Animation.RELATIVE_TO_SELF,
-				(float) (marginRect.left) / dstSize.width
-						/ (iniSize.width / dstSize.width - 1),
-				Animation.RELATIVE_TO_SELF, (float) (marginRect.top)
+				/ dstSize.width, 1.0f, (float) iniSize.height / dstSize.height,
+				Animation.RELATIVE_TO_SELF, (float) marginRect.left
+						/ dstSize.width
+						/ ((float) iniSize.width / dstSize.width - 1),
+				Animation.RELATIVE_TO_SELF, (float) marginRect.top
 						/ dstSize.height
-						/ (iniSize.height / dstSize.height - 1));
+						/ ((float) iniSize.height / dstSize.height - 1));
 
 		largerScaleAnimation.setDuration(duration);
 		largerScaleAnimation.setFillAfter(true);
@@ -229,6 +231,15 @@ public class VideoViewScale {
 
 		handler.sendEmptyMessage(LARGER_CAPTURE_FRAME);
 
+	}
+
+	public void resetCameraPreview(Rect marginRect, int width, int height) {
+		this.marginRect = marginRect;
+		FrameLayout.LayoutParams llParams = null;
+		llParams = new FrameLayout.LayoutParams(width, height);
+		llParams.setMargins(marginRect.left, marginRect.top, marginRect.bottom,
+				marginRect.right);
+		svVideo.setLayoutParams(llParams);
 	}
 
 }
