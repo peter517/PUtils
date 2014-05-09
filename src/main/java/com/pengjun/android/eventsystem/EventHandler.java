@@ -1,18 +1,20 @@
 package com.pengjun.android.eventsystem;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.pengjun.android.component.CreateLooperThread;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.pengjun.android.component.CreateLooperThread;
+
 public class EventHandler extends Handler {
 
 	private static EventHandler messageHandler = null;
-	private Set<EventProcessor> eventProcessorSet = new HashSet<EventProcessor>();
+	private Set<EventProcessor> eventProcessorSet = Collections
+			.synchronizedSet(new HashSet<EventProcessor>());
 
 	private EventHandler(Looper looper) {
 		super(looper);
@@ -52,8 +54,8 @@ public class EventHandler extends Handler {
 
 	}
 
-	public void removeAllEvent() {
-		eventProcessorSet = new HashSet<EventProcessor>();
+	public void removeAllEventProcessor() {
+		eventProcessorSet.clear();
 	}
 
 	public void publishEvent(Event event) {

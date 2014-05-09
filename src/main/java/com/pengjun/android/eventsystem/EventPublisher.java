@@ -13,6 +13,16 @@ public class EventPublisher {
 		return instance;
 	}
 
+	public void start() {
+		if (instance == null) {
+			instance = new EventPublisher();
+		}
+	}
+
+	public void stop() {
+		removeAllEventProcessor();
+	}
+
 	public synchronized void addMessageProcessor(EventProcessor processor) {
 		messageHandler.addEventProcessor(processor);
 	}
@@ -21,7 +31,8 @@ public class EventPublisher {
 		messageHandler.publishEvent(event);
 	}
 
-	public void removeAllEvent() {
-		messageHandler.removeAllEvent();
+	private void removeAllEventProcessor() {
+		messageHandler.removeAllEventProcessor();
 	}
+
 }
