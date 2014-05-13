@@ -12,7 +12,7 @@ public class EventPublisher {
 	private BlockingQueue<Event> events = new ArrayBlockingQueue<Event>(
 			MAX_EVENT_NUM);
 	private static EventPublisher instance = null;
-	private static Thread thread = null;
+	private Thread thread = null;
 	private static boolean isRunning = false;
 
 	public static EventPublisher getInstance() {
@@ -41,10 +41,13 @@ public class EventPublisher {
 			}
 		}, "EventPublisher");
 
+	}
+
+	public void start() {
 		thread.start();
 	}
 
-	public static void destroy() {
+	public void stop() {
 		if (thread != null) {
 			isRunning = false;
 			thread.interrupt();

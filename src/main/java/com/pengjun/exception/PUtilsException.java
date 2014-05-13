@@ -1,47 +1,39 @@
 package com.pengjun.exception;
 
+@SuppressWarnings("serial")
 public class PUtilsException extends Exception {
 
-	private static final long serialVersionUID = 1L;
-
 	private ExceptionCode exceptionCode = null;
-	private Exception subException = null;
-
-	public PUtilsException(ExceptionCode errCode, Exception subException) {
-		this.exceptionCode = errCode;
-		this.subException = subException;
-	}
+	private String reason = null;
 
 	public PUtilsException(ExceptionCode errCode) {
 		this.exceptionCode = errCode;
+	}
+
+	public PUtilsException(ExceptionCode errCode, String reason) {
+		this.exceptionCode = errCode;
+		this.reason = reason;
+	}
+
+	public PUtilsException(ExceptionCode errCode, Exception subException) {
+		this.exceptionCode = errCode;
+		this.reason = subException.getMessage();
+	}
+
+	public String getMessage() {
+		if (reason != null) {
+			return "errorCode: " + exceptionCode + ", reason: " + reason;
+		} else {
+			return "errorCode: " + exceptionCode;
+		}
 	}
 
 	public ExceptionCode getExceptionCode() {
 		return exceptionCode;
 	}
 
-	public Exception getSubException() {
-		return subException;
-	}
-
-	public String getMessage() {
-		if (subException != null) {
-			return subException.getMessage();
-		}
-		return super.getMessage();
-	}
-
-	@Override
-	public String toString() {
-		String info = "";
-		if (subException != null) {
-			info = "[ExceptionCode=" + exceptionCode + "]"
-					+ subException.getMessage();
-		} else {
-			info = "[ExceptionCode=" + exceptionCode + "]";
-		}
-
-		return info;
+	public String getReason() {
+		return reason;
 	}
 
 }

@@ -31,7 +31,7 @@ public class VideoViewScale {
 
 	}
 
-	private String TAG = VideoViewScale.class.getName();
+	private String TAG = VideoViewScale.class.getSimpleName();
 
 	private FrameLayout flVideo;
 	private SurfaceView svVideo;
@@ -49,10 +49,16 @@ public class VideoViewScale {
 
 	private final int LARGER_CAPTURE_FRAME = 3;
 	private final int RESIZE_LARGER_CAPTURE_FRAME_AND_FADE_OUT_AND_RESIZE_LARGER_VIDEO_VIEW = 4;
+	private final int REMOVE_CAPTURE_FRAME_VIEW = 5;
 	private static String ANIMATION_FINISH = "animation_tag";
 	private ViewSize iniSize;
 	private ViewSize dstSize;
 	private Rect marginRect;
+	private ScaleState scaleMode = ScaleState.UNINIT;
+
+	enum ScaleState {
+		UNINIT, SMALLER_MODE, LARGER_MODE
+	};
 
 	public VideoViewScale(Activity a, FrameLayout fl, SurfaceView sv,
 			ViewSize iniS, ViewSize dstS, Rect marginR) {
@@ -70,10 +76,10 @@ public class VideoViewScale {
 			public void handleMessage(Message msg) {
 
 				FrameLayout.LayoutParams llParams = null;
+				Log.d(TAG, "VideoViewScale handleMessage:" + msg.what);
 				switch (msg.what) {
 				case SMALLER_CAPTURE_FRAME:
 
-					flVideo.removeView(ivCapturedFrame);
 					ivCapturedFrame = new ImageView(activity);
 					llParams = new FrameLayout.LayoutParams(iniSize.width,
 							iniSize.height);
@@ -97,7 +103,6 @@ public class VideoViewScale {
 
 					break;
 				case RESIZE_SMALLER_CAPTURE_FRAME_AND_FADE_OUT:
-
 					llParams = new FrameLayout.LayoutParams(dstSize.width,
 							dstSize.height);
 					llParams.setMargins(marginRect.left, marginRect.top,
@@ -108,8 +113,6 @@ public class VideoViewScale {
 
 					break;
 				case LARGER_CAPTURE_FRAME:
-
-					flVideo.removeView(ivCapturedFrame);
 
 					ivCapturedFrame = new ImageView(activity);
 					llParams = new FrameLayout.LayoutParams(dstSize.width,
@@ -135,10 +138,13 @@ public class VideoViewScale {
 
 					llParams = new FrameLayout.LayoutParams(iniSize.width,
 							iniSize.height);
-					svVideo.setLayoutParams(llParams);
+					if (svVideo != null)
+						svVideo.setLayoutParams(llParams);
 
 					break;
-
+				case REMOVE_CAPTURE_FRAME_VIEW:
+					flVideo.removeView(ivCapturedFrame);
+					break;
 				}
 
 			}
@@ -146,6 +152,23 @@ public class VideoViewScale {
 		};
 
 		alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+		alphaAnimation.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				Message msg = new Message();
+				msg.what = REMOVE_CAPTURE_FRAME_VIEW;
+				handler.sendMessageDelayed(msg, 0);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+		});
 		alphaAnimation.setDuration(1000);
 		alphaAnimation.setFillAfter(true);
 
@@ -240,6 +263,20 @@ public class VideoViewScale {
 		llParams.setMargins(marginRect.left, marginRect.top, marginRect.bottom,
 				marginRect.right);
 		svVideo.setLayoutParams(llParams);
+	}
+
+	public void stopAnimation() {
+		Log.d(TAG, "stopAnimation");
+		scaleMode = ScaleState.UNINIT;
+		if (ivCapturedFrame != null) {
+			// not work onAnimationEnd still called
+			ivCapturedFrame.clearAnimation();
+		}
+		handler.removeMessages(SMALLER_CAPTURE_FRAME);
+		handler.removeMessages(RESIZE_SMALLER_VIDEO_VIEW);
+		handler.removeMessages(RESIZE_SMALLER_CAPTURE_FRAME_AND_FADE_OUT);
+		handler.removeMessages(LARGER_CAPTURE_FRAME);
+		handler.removeMessages(RESIZE_LARGER_CAPTURE_FRAME_AND_FADE_OUT_AND_RESIZE_LARGER_VIDEO_VIEW);
 	}
 
 }

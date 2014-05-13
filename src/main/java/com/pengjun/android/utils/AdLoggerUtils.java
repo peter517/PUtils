@@ -10,6 +10,8 @@ import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class AdLoggerUtils {
 
+	public static final String milestonePrefix = "milestone: ";
+
 	public static void initLogger(String projectName,
 			boolean useLogCatAppender, boolean useFileAppender) {
 
@@ -56,6 +58,10 @@ public class AdLoggerUtils {
 
 	public static Logger getLogger(String name) {
 		return Logger.getLogger(name);
+	}
+
+	public static void markMilestoneLog(Logger logger, String str) {
+		logger.debug(milestonePrefix + str);
 	}
 
 }

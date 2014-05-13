@@ -4,7 +4,11 @@ public enum ExceptionCode {
 
 	OK("ok");
 
-	String info;
+	private String info;
+
+	public String getExceptionInfo() {
+		return info;
+	}
 
 	ExceptionCode(String info) {
 		this.info = info;
