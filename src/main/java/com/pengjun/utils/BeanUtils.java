@@ -15,8 +15,9 @@ public class BeanUtils {
 			Object object = c.newInstance();
 			for (int i = 0; i < methods.length; i++) {
 				if (methods[i].getName().startsWith("is")
-						|| methods[i].getName().startsWith("get")) {
-					sb.append(methods[i].getName() + " : "
+						|| methods[i].getName().startsWith("get")
+						|| methods[i].getName().startsWith("do")) {
+					sb.append("\t" + methods[i].getName() + " : "
 							+ methods[i].invoke(object) + "\n");
 				}
 			}
@@ -35,7 +36,7 @@ public class BeanUtils {
 		for (Field field : fields) {
 			if (Modifier.isStatic(field.getModifiers())) {
 				try {
-					sb.append(field.getName() + "="
+					sb.append("\t" + field.getName() + "="
 							+ field.get(null).toString());
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
@@ -57,7 +58,8 @@ public class BeanUtils {
 		for (Field field : fields) {
 
 			try {
-				sb.append(field.getName() + "=" + field.get(o).toString());
+				sb.append("\t" + field.getName() + "="
+						+ field.get(o).toString());
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {

@@ -13,6 +13,13 @@ public class EventPublisher {
 		return instance;
 	}
 
+	public static void destroy() {
+		if (instance != null) {
+			EventHandler.getInstance().destory();
+			instance = null;
+		}
+	}
+
 	public void start() {
 		if (instance == null) {
 			instance = new EventPublisher();

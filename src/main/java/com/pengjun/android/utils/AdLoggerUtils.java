@@ -11,6 +11,7 @@ import de.mindpipe.android.logging.log4j.LogConfigurator;
 public class AdLoggerUtils {
 
 	public static final String milestonePrefix = "milestone: ";
+	public static final String EXCEPTION_TAG = "projectName_exception";
 
 	public static void initLogger(String projectName,
 			boolean useLogCatAppender, boolean useFileAppender) {
@@ -39,17 +40,18 @@ public class AdLoggerUtils {
 
 	}
 
-	public static void printException(Logger logger, Exception e) {
-		if (e == null || logger == null)
+	public static void printException(Logger logger, Throwable throwable) {
+		if (throwable == null || logger == null)
 			return;
-		StackTraceElement[] arrTrace = e.getStackTrace();
-		if (e.getCause() != null)
-			logger.error(e.getClass().getName() + " : " + e.getCause());
-		if (e.getMessage() != null)
-			logger.error(e.getClass().getName() + " : " + e.getMessage());
-		for (StackTraceElement trace : arrTrace) {
-			logger.error("\t" + trace);
-		}
+		// StackTraceElement[] arrTrace = e.getStackTrace();
+		// if (e.getCause() != null)
+		// logger.error(e.getClass().getName() + " : " + e.getCause());
+		// if (e.getMessage() != null)
+		// logger.error(e.getClass().getName() + " : " + e.getMessage());
+		// for (StackTraceElement trace : arrTrace) {
+		// logger.error("\t" + trace);
+		// }
+		logger.debug(EXCEPTION_TAG, throwable);
 	}
 
 	public static void printFromTag(String tag, String info) {

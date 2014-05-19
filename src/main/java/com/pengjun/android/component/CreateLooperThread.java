@@ -29,4 +29,10 @@ public class CreateLooperThread extends Thread {
 		}
 		Looper.loop();
 	}
+
+	public void quit() {
+		if (myLooper != null) {
+			myLooper.quit();
+		}
+	}
 }

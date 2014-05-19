@@ -15,9 +15,10 @@ public class PUtilsException extends Exception {
 		this.reason = reason;
 	}
 
-	public PUtilsException(ExceptionCode errCode, Exception subException) {
+	public PUtilsException(ExceptionCode errCode, Throwable throwable) {
+		super(throwable);
 		this.exceptionCode = errCode;
-		this.reason = subException.getMessage();
+		this.reason = throwable.getMessage();
 	}
 
 	public String getMessage() {

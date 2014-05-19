@@ -12,9 +12,10 @@ import com.pengjun.android.component.CreateLooperThread;
 
 public class EventHandler extends Handler {
 
-	private static EventHandler messageHandler = null;
+	private static EventHandler instance = null;
 	private Set<EventProcessor> eventProcessorSet = Collections
 			.synchronizedSet(new HashSet<EventProcessor>());
+	private static CreateLooperThread thread = new CreateLooperThread();
 
 	private EventHandler(Looper looper) {
 		super(looper);
@@ -22,8 +23,7 @@ public class EventHandler extends Handler {
 
 	public static EventHandler getInstance() {
 
-		if (messageHandler == null) {
-			CreateLooperThread thread = new CreateLooperThread();
+		if (instance == null) {
 			thread.start();
 			try {
 				thread.waitForMyLooper();
@@ -32,8 +32,15 @@ public class EventHandler extends Handler {
 			}
 			return new EventHandler(thread.myLooper());
 		}
-		return messageHandler;
+		return instance;
 
+	}
+
+	public static void destory() {
+		if (instance != null) {
+			thread.quit();
+			instance = null;
+		}
 	}
 
 	public synchronized void addEventProcessor(EventProcessor processor) {
@@ -68,7 +75,7 @@ public class EventHandler extends Handler {
 	public void handleMessage(Message msg) {
 		for (EventProcessor eventProcessor : eventProcessorSet) {
 			eventProcessor.handleEvent((Event) msg.obj);
-			this.removeMessages(msg.what);
+			// removeMessages(msg.what);
 		}
 	}
 }
