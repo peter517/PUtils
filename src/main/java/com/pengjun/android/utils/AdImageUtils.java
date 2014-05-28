@@ -69,15 +69,16 @@ public class AdImageUtils {
 
 	public static Bitmap createReflectedImage(Bitmap oriBmp, float ref2OriRadio) {
 
-		if (ref2OriRadio < 0) {
-			return null;
-		}
-
 		int width = oriBmp.getWidth();
 		int height = oriBmp.getHeight();
 
+		if (ref2OriRadio < 0) {
+			return Bitmap.createBitmap(width, height, Config.ARGB_8888);
+		}
+
 		Bitmap dstBmp = Bitmap.createBitmap(width,
 				(int) (height * (1 + ref2OriRadio)), Config.ARGB_8888);
+
 		Canvas canvas = new Canvas(dstBmp);
 		canvas.drawBitmap(oriBmp, 0, 0, null);
 

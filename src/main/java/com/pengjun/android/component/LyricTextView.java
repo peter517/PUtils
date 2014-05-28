@@ -424,7 +424,7 @@ public class LyricTextView extends TextView {
 					FileOutputStream out = new FileOutputStream(file);
 					byte[] data = str.getBytes();
 					if (data == null) {
-						return null;
+						return new String();
 					}
 					out.write(data);
 					out.close();
@@ -433,12 +433,12 @@ public class LyricTextView extends TextView {
 					e.printStackTrace();
 				}
 			}
-			return null;
+			return new String();
 		}
 
 		private String getLyricFromFile(Song song) {
 			if (song.getLyricUrl() == null) {
-				return null;
+				return new String();
 			}
 			File file = new File(lyricDir, String.format("%d.lrc",
 					song.getSongId()));
@@ -446,7 +446,7 @@ public class LyricTextView extends TextView {
 				byte[] c = FileUtils.readFile(file);
 				return new String(c);
 			}
-			return null;
+			return new String();
 		}
 
 		@Override

@@ -1,5 +1,6 @@
 package com.pengjun.android.media.musicplay;
 
+import java.util.Collections;
 import java.util.List;
 
 import android.content.ComponentName;
@@ -204,7 +205,7 @@ public class MusicPlayCtrl {
 		if (musicPlayService != null) {
 			return musicPlayService.getCurrentList();
 		}
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 
 	public boolean isPlaying() {
