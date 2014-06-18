@@ -27,7 +27,7 @@ public final class LoadResourceManagerProxy {
 	public static int displayDownloaderDefaultCapacity = 30;
 	public static int maximumDiskCacheSize = 1024 * 1024 * 50;
 	public static int maximumMemeryCacheSize = 1024 * 1024 * 10;
-	public static String mimeType = "image";
+	public final static String mimeType = "image";
 
 	private final static CreateLooperThread createLooperThread = new CreateLooperThread();
 

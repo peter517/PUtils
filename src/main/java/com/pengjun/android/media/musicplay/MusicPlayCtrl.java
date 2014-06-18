@@ -59,7 +59,7 @@ public class MusicPlayCtrl {
 		}
 	};
 
-	public static MusicPlayCtrl getMusicPlayCtrl(Context context) {
+	public static MusicPlayCtrl newInstance(Context context) {
 
 		MusicPlayCtrl newController = new MusicPlayCtrl(context);
 		return newController;

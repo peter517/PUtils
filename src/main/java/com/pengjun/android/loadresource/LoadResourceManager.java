@@ -32,7 +32,7 @@ public final class LoadResourceManager extends Handler implements
 	private final HashMap<Integer, Downloader> downloaderMap = new HashMap<Integer, Downloader>();
 	private final HashMap<String, ObjectFactory> objectFactoryMap = new HashMap<String, ObjectFactory>();
 	private final HashMap<String, HashSet<ReplyListener>> callbackMap = new HashMap<String, HashSet<ReplyListener>>();
-	public static String TAG = "loadresource";
+	public final static String TAG = "loadresource";
 
 	public static class LoadRequest implements Cloneable {
 		public final String urn;

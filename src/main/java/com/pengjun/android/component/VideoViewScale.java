@@ -31,6 +31,10 @@ public class VideoViewScale {
 
 	}
 
+	public interface VideoViewScaleListener {
+		void onVideoViewScaleFinished();
+	}
+
 	private String TAG = VideoViewScale.class.getSimpleName();
 
 	private FrameLayout flVideo;
@@ -54,11 +58,17 @@ public class VideoViewScale {
 	private ViewSize iniSize;
 	private ViewSize dstSize;
 	private Rect marginRect;
+	private VideoViewScaleListener videoViewScaleListener;
 	private ScaleState scaleMode = ScaleState.UNINIT;
 
 	enum ScaleState {
 		UNINIT, SMALLER_MODE, LARGER_MODE
 	};
+
+	public void addVideoViewScaleListener(
+			VideoViewScaleListener videoViewScaleListener) {
+		this.videoViewScaleListener = videoViewScaleListener;
+	}
 
 	public VideoViewScale(Activity a, FrameLayout fl, SurfaceView sv,
 			ViewSize iniS, ViewSize dstS, Rect marginR) {
@@ -99,7 +109,8 @@ public class VideoViewScale {
 							dstSize.height);
 					llParams.setMargins(marginRect.left, marginRect.top,
 							marginRect.bottom, marginRect.right);
-					svVideo.setLayoutParams(llParams);
+					if (svVideo != null)
+						svVideo.setLayoutParams(llParams);
 
 					break;
 				case RESIZE_SMALLER_CAPTURE_FRAME_AND_FADE_OUT:
@@ -144,6 +155,9 @@ public class VideoViewScale {
 					break;
 				case REMOVE_CAPTURE_FRAME_VIEW:
 					flVideo.removeView(ivCapturedFrame);
+					if (videoViewScaleListener != null) {
+						videoViewScaleListener.onVideoViewScaleFinished();
+					}
 					break;
 				}
 
@@ -262,7 +276,8 @@ public class VideoViewScale {
 		llParams = new FrameLayout.LayoutParams(width, height);
 		llParams.setMargins(marginRect.left, marginRect.top, marginRect.bottom,
 				marginRect.right);
-		svVideo.setLayoutParams(llParams);
+		if (svVideo != null)
+			svVideo.setLayoutParams(llParams);
 	}
 
 	public void stopAnimation() {

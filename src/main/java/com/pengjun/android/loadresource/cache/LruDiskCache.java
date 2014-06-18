@@ -199,7 +199,7 @@ public class LruDiskCache {
 			if (currentCacheSize < 0)
 				currentCacheSize = expire();
 			else {
-				currentCacheSize += cacheFile.length();
+				// currentCacheSize += cacheFile.length();
 				currentCacheSize = expire();
 			}
 		} else {

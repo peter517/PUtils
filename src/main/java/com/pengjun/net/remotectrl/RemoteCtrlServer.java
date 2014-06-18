@@ -13,7 +13,7 @@ import com.pengjun.net.BaseNettyServer;
 
 public class RemoteCtrlServer extends BaseNettyServer {
 	private static RemoteCtrlServer remoteCtrlServer = null;
-	protected static Set<RemoteCtrlCmd> remoteCtrlCmdSet = new HashSet<RemoteCtrlCmd>();
+	protected final static Set<RemoteCtrlCmd> remoteCtrlCmdSet = new HashSet<RemoteCtrlCmd>();
 
 	public void addRemoteCtrlCmd(RemoteCtrlCmd remoteCtrlCmd) {
 		remoteCtrlCmdSet.add(remoteCtrlCmd);
