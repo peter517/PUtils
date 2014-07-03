@@ -15,12 +15,14 @@ public class TimeUtils {
 	public static final String yyyy_FORMT = "yyyy";
 	public static final String HH_FORMT = "HH";
 	public static final String TIME_SEPARATOR = "-";
+	public static final String RAW_SEPARATOR = "yyyyMMddHHmmss";
 
 	private static DateFormat yyyyMMddFormat = new SimpleDateFormat(
 			yyyyMMdd_FORMT);
 	private static DateFormat yyyyMMFormat = new SimpleDateFormat(yyyyMM_FORMT);
 	private static DateFormat yyyyFormat = new SimpleDateFormat(yyyy_FORMT);
 	private static DateFormat HHFormat = new SimpleDateFormat(HH_FORMT);
+	private static DateFormat RAWFormat = new SimpleDateFormat(RAW_SEPARATOR);
 
 	private final static Calendar calendar = Calendar.getInstance();
 
@@ -48,6 +50,11 @@ public class TimeUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static String getCurRawTime() {
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		return RAWFormat.format(calendar.getTime());
 	}
 
 	public static String getCurHour() {
