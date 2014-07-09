@@ -18,20 +18,26 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.os.StatFs;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 
 public class AdResourceUtils {
 
-	public static final String IS_DEBUG = "debug";
-
-	public static final int SINGLE_APP_MEMORY_LIMIT_32 = 32;
-
 	public static int[] COLOR_ARR = new int[] { Color.BLUE, Color.MAGENTA,
 			Color.DKGRAY, Color.CYAN, Color.GREEN, Color.GRAY, Color.RED,
 			Color.WHITE, Color.LTGRAY };
+	public static final int SINGLE_APP_MEMORY_LIMIT_32 = 32;
 	// res
 	private static List<String> listSystemBuildProperty = new ArrayList<String>();
+
+	public static void setStrictModeOn() {
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+				.detectNetwork().penaltyLog().penaltyDialog()
+				.permitDiskWrites().permitDiskReads().build());
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll()
+				.penaltyLog().build());
+	}
 
 	public static synchronized List<String> getSystemBuildProperties() {
 		if (!listSystemBuildProperty.isEmpty())

@@ -19,12 +19,6 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-
-			<!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> <configuration> 
-				<appendAssemblyId>false</appendAssemblyId> <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
-				</descriptorRefs> </configuration> <executions> <execution> <id>make-assembly</id> 
-				<phase>package</phase> <goals> <goal>assembly</goal> </goals> </execution> 
-				</executions> </plugin> -->
 		</plugins>
 	</build>
 
@@ -43,7 +37,6 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/android-support-v4.jar</systemPath>
 		</dependency>
-
 
 		<dependency>
 			<groupId>log4j</groupId>

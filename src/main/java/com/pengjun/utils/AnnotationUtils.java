@@ -21,7 +21,8 @@ public class AnnotationUtils {
 		try {
 			Object object = c.newInstance();
 			for (int i = 0; i < methods.length; i++) {
-				if (methods[i].getAnnotation(PrintMethod.class) != null) {
+				if (methods[i].getParameterTypes().length == 0
+						&& methods[i].getAnnotation(PrintMethod.class) != null) {
 					sb.append("\t" + methods[i].getName() + " : "
 							+ methods[i].invoke(object) + "\n");
 				}

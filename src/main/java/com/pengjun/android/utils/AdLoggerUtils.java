@@ -11,14 +11,15 @@ import de.mindpipe.android.logging.log4j.LogConfigurator;
 public class AdLoggerUtils {
 
 	public static final String milestonePrefix = "milestone: ";
-	public static final String EXCEPTION_TAG = "projectName_exception";
+	private static String exceptionTag = "appName_exception";
 
-	public static void initLogger(String projectName,
-			boolean useLogCatAppender, boolean useFileAppender) {
+	public static void initLogger(String appName, boolean useLogCatAppender,
+			boolean useFileAppender) {
 
 		String logPath = Environment.getExternalStorageDirectory()
-				+ File.separator + projectName + File.separator + "logs"
-				+ File.separator + projectName + ".log";
+				+ File.separator + appName + File.separator + "logs"
+				+ File.separator + appName + ".log";
+		exceptionTag = appName + "_exception";
 
 		LogConfigurator logConfigurator = new LogConfigurator();
 
@@ -29,13 +30,13 @@ public class AdLoggerUtils {
 		logConfigurator.setMaxFileSize(1024 * 1024 * 5);
 		logConfigurator.setImmediateFlush(true);
 
-		logConfigurator.setLogCatPattern("%m  [%F:%L: " + projectName + "] %n");
+		logConfigurator.setLogCatPattern("%m  [%F:%L: " + appName + "] %n");
 		logConfigurator.setUseLogCatAppender(useLogCatAppender);
 		if (AdResourceUtils.hasExternalStorage()) {
 			logConfigurator.setUseFileAppender(useFileAppender);
 		}
 		logConfigurator.configure();
-		Logger logger = Logger.getLogger(projectName);
+		Logger logger = Logger.getLogger(appName);
 		logger.info("-----------------logger start-----------------");
 
 	}
@@ -43,15 +44,7 @@ public class AdLoggerUtils {
 	public static void printException(Logger logger, Throwable throwable) {
 		if (throwable == null || logger == null)
 			return;
-		// StackTraceElement[] arrTrace = e.getStackTrace();
-		// if (e.getCause() != null)
-		// logger.error(e.getClass().getName() + " : " + e.getCause());
-		// if (e.getMessage() != null)
-		// logger.error(e.getClass().getName() + " : " + e.getMessage());
-		// for (StackTraceElement trace : arrTrace) {
-		// logger.error("\t" + trace);
-		// }
-		logger.debug(EXCEPTION_TAG, throwable);
+		logger.debug(exceptionTag, throwable);
 	}
 
 	public static void printFromTag(String tag, String info) {
