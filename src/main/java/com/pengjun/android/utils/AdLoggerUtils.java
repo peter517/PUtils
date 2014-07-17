@@ -6,6 +6,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import android.os.Environment;
+import android.util.Log;
 import de.mindpipe.android.logging.log4j.LogConfigurator;
 
 public class AdLoggerUtils {
@@ -35,7 +36,14 @@ public class AdLoggerUtils {
 		if (AdResourceUtils.hasExternalStorage()) {
 			logConfigurator.setUseFileAppender(useFileAppender);
 		}
-		logConfigurator.configure();
+		try {
+			logConfigurator.configure();
+		} catch (Exception e) {
+			// exception when sdcard could not be written
+			logConfigurator.setUseFileAppender(false);
+			logConfigurator.configure();
+			printException(Logger.getLogger(appName), e);
+		}
 		Logger logger = Logger.getLogger(appName);
 		logger.info("-----------------logger start-----------------");
 
@@ -57,6 +65,10 @@ public class AdLoggerUtils {
 
 	public static void markMilestoneLog(Logger logger, String str) {
 		logger.debug(milestonePrefix + str);
+	}
+
+	public static void debug(String info) {
+		Log.d("pj", info);
 	}
 
 }
