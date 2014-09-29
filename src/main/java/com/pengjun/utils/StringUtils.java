@@ -1,7 +1,6 @@
 package com.pengjun.utils;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.MessageDigest;
@@ -10,6 +9,7 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -22,37 +22,12 @@ public class StringUtils {
 				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
-	/***
-	 * encode by Base64
-	 */
-	public static String encodeBase64(byte[] input) throws Exception {
-		Class clazz = Class
-				.forName("com.sun.org.apache.xerces.internal.impl.dv.util.Base64");
-		Method mainMethod = clazz.getMethod("encode", byte[].class);
-		mainMethod.setAccessible(true);
-		Object retObj = mainMethod.invoke(null, new Object[] { input });
-		return (String) retObj;
+	public static byte[] decodeBase64(final byte[] bytes) {
+		return Base64.decodeBase64(bytes);
 	}
 
-	/***
-	 * decode by Base64
-	 */
-	public static byte[] decodeBase64(String input) throws Exception {
-		Class clazz = Class
-				.forName("com.sun.org.apache.xerces.internal.impl.dv.util.Base64");
-		Method mainMethod = clazz.getMethod("decode", String.class);
-		mainMethod.setAccessible(true);
-		Object retObj = mainMethod.invoke(null, input);
-		return (byte[]) retObj;
-	}
-
-	public static <T extends Enum<T>> String[] getEnumStrArr(Class<T> enumClass) {
-		String[] enumStrArr = new String[enumClass.getEnumConstants().length];
-		int i = 0;
-		for (Enum<T> e : enumClass.getEnumConstants()) {
-			enumStrArr[i++] = e.name();
-		}
-		return enumStrArr;
+	public static String encodeBase64(final byte[] bytes) {
+		return new String(Base64.encodeBase64(bytes));
 	}
 
 	public static String createMd5(String str) {

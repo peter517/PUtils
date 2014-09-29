@@ -22,14 +22,16 @@ import android.os.StrictMode;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 
+import com.pengjun.utils.StringUtils;
+
 public class AdResourceUtils {
 
 	public static int[] COLOR_ARR = new int[] { Color.BLUE, Color.MAGENTA,
 			Color.DKGRAY, Color.CYAN, Color.GREEN, Color.GRAY, Color.RED,
 			Color.WHITE, Color.LTGRAY };
-	public static final int SINGLE_APP_MEMORY_LIMIT_32 = 32;
 	// res
 	private static List<String> listSystemBuildProperty = new ArrayList<String>();
+	public static final int SINGLE_APP_MEMORY_LIMIT_32 = 32;
 
 	public static void setStrictModeOn() {
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -175,6 +177,36 @@ public class AdResourceUtils {
 			ex.printStackTrace();
 		}
 		return localIPs;
+	}
+
+	public static String getBase64StrFromIp(String localIp) {
+		if (localIp.equals("")) {
+			return "";
+		}
+
+		String[] ipArr = localIp.split("\\.");
+		// base three ip block
+		int ipTwoBlock = Integer.valueOf(ipArr[1]);
+		int ipThreeBlock = Integer.valueOf(ipArr[2]);
+		int ipFourBlock = Integer.valueOf(ipArr[3]);
+
+		return StringUtils.encodeBase64(new byte[] { (byte) (ipTwoBlock),
+				(byte) (ipThreeBlock), (byte) (ipFourBlock) });
+	}
+
+	public static String getIpFromBase64Byte(byte[] ipByteArr) {
+
+		int[] ipFormatArr = new int[ipByteArr.length];
+		int i = 0;
+		for (byte ipBlock : ipByteArr) {
+			if (ipBlock < 0) {
+				ipFormatArr[i++] = ipBlock + 256;
+			} else {
+				ipFormatArr[i++] = ipBlock;
+			}
+		}
+		return String.format("%d.%d.%d", ipFormatArr[0], ipFormatArr[1],
+				ipFormatArr[2]);
 	}
 
 	public static String getAndroidId(Context context) {
