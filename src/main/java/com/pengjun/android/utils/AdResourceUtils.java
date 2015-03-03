@@ -3,6 +3,7 @@ package com.pengjun.android.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
@@ -32,6 +34,23 @@ public class AdResourceUtils {
 	// res
 	private static List<String> listSystemBuildProperty = new ArrayList<String>();
 	public static final int SINGLE_APP_MEMORY_LIMIT_32 = 32;
+
+	public static String getAPPVersion(Context context, String targetPackageName) {
+		List<PackageInfo> packages = context.getPackageManager()
+				.getInstalledPackages(0);
+
+		for (int i = 0; i < packages.size(); i++) {
+			PackageInfo packageInfo = packages.get(i);
+			String packageName = packageInfo.packageName;
+			String versionName = packageInfo.versionName;
+
+			if (packageName.endsWith(targetPackageName)) {
+				return versionName;
+			}
+		}
+
+		return "";
+	}
 
 	public static void setStrictModeOn() {
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -96,6 +115,18 @@ public class AdResourceUtils {
 			String value) {
 		context.getSharedPreferences(SP_FIRST_START, 0).edit()
 				.putString(key, value).commit();
+	}
+
+	public static boolean getSharedPreferencesBoolean(Context context,
+			String key) {
+		return context.getSharedPreferences(SP_FIRST_START, 0).getBoolean(key,
+				false);
+	}
+
+	public static void putSharedPreferencesBoolean(Context context, String key,
+			boolean value) {
+		context.getSharedPreferences(SP_FIRST_START, 0).edit()
+				.putBoolean(key, value).commit();
 	}
 
 	public static boolean isServiceRunning(Context context, String className) {
@@ -194,6 +225,11 @@ public class AdResourceUtils {
 				(byte) (ipThreeBlock), (byte) (ipFourBlock) });
 	}
 
+	public static String getBase64StrFromLen6Str(String localIp) {
+
+		return "";
+	}
+
 	public static String getIpFromBase64Byte(byte[] ipByteArr) {
 
 		int[] ipFormatArr = new int[ipByteArr.length];
@@ -213,6 +249,27 @@ public class AdResourceUtils {
 		String androidId = Secure.getString(context.getContentResolver(),
 				Secure.ANDROID_ID);
 		return androidId;
+	}
+
+	private static String getSystemProperties(Class<?> cls, String key) {
+		try {
+			Method hideMethod = cls.getMethod("get", String.class);
+			Object object = cls.newInstance();
+			return (String) hideMethod.invoke(object, key);
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	public static String getTvUUID() {
+		try {
+			final String key = "ro.aliyun.clouduuid";
+			Class<?> cls = Class.forName("android.os.SystemProperties");
+			final String valueString = getSystemProperties(cls, key);
+			return valueString;
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 	public static String getDisplayName(Context context) {

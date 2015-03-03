@@ -18,10 +18,20 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Shader.TileMode;
+import android.graphics.YuvImage;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class AdImageUtils {
+
+	public static Bitmap yuvImage2Bitmap(YuvImage yuvImage) {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		yuvImage.compressToJpeg(
+				new Rect(0, 0, yuvImage.getWidth(), yuvImage.getHeight()), 50,
+				out);
+		byte[] imageBytes = out.toByteArray();
+		return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+	}
 
 	public static void writeBitmap2File(Bitmap bitmap, File file) {
 		FileOutputStream fos = null;
@@ -69,16 +79,15 @@ public class AdImageUtils {
 
 	public static Bitmap createReflectedImage(Bitmap oriBmp, float ref2OriRadio) {
 
+		if (ref2OriRadio < 0) {
+			return null;
+		}
+
 		int width = oriBmp.getWidth();
 		int height = oriBmp.getHeight();
 
-		if (ref2OriRadio < 0) {
-			return Bitmap.createBitmap(width, height, Config.ARGB_8888);
-		}
-
 		Bitmap dstBmp = Bitmap.createBitmap(width,
 				(int) (height * (1 + ref2OriRadio)), Config.ARGB_8888);
-
 		Canvas canvas = new Canvas(dstBmp);
 		canvas.drawBitmap(oriBmp, 0, 0, null);
 

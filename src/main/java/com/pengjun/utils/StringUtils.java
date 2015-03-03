@@ -9,9 +9,10 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import android.util.Base64;
 
 public class StringUtils {
 
@@ -23,11 +24,11 @@ public class StringUtils {
 	}
 
 	public static byte[] decodeBase64(final byte[] bytes) {
-		return Base64.decodeBase64(bytes);
+		return Base64.decode(bytes, Base64.DEFAULT);
 	}
 
 	public static String encodeBase64(final byte[] bytes) {
-		return new String(Base64.encodeBase64(bytes));
+		return new String(Base64.encode(bytes, Base64.DEFAULT));
 	}
 
 	public static String createMd5(String str) {
